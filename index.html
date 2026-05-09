@@ -1,543 +1,573 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NutrientKG</title>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: Georgia, 'Times New Roman', serif;
-      font-size: 16px;
-      line-height: 1.7;
-      color: #333;
-      background: #fff;
-    }
-
-    header {
-      background: #2c6e49;
-      color: white;
-      padding: 2rem 0;
-      border-bottom: 4px solid #1a4731;
-    }
-
-    header .inner {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 0 2rem;
-    }
-
-    header h1 {
-      font-size: 2.4rem;
-      font-weight: bold;
-      letter-spacing: 0.02em;
-      margin-bottom: 0.4rem;
-    }
-
-    header p.tagline {
-      font-size: 1.05rem;
-      color: #c8e6c9;
-      font-style: italic;
-    }
-
-    nav {
-      background: #1a4731;
-      padding: 0;
-    }
-
-    nav ul {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 0 2rem;
-      list-style: none;
-      display: flex;
-      flex-wrap: wrap;
-    }
-
-    nav ul li a {
-      display: block;
-      color: #c8e6c9;
-      text-decoration: none;
-      padding: 0.75rem 1.2rem;
-      font-size: 0.95rem;
-      font-family: Arial, sans-serif;
-      transition: background 0.2s;
-    }
-
-    nav ul li a:hover {
-      background: #2c6e49;
-      color: white;
-    }
-
-    .content {
-      max-width: 960px;
-      margin: 2.5rem auto;
-      padding: 0 2rem;
-    }
-
-    section {
-      margin-bottom: 3rem;
-    }
-
-    section h2 {
-      font-size: 1.6rem;
-      color: #2c6e49;
-      border-bottom: 2px solid #c8e6c9;
-      padding-bottom: 0.4rem;
-      margin-bottom: 1.2rem;
-      font-family: Arial, sans-serif;
-    }
-
-    section h3 {
-      font-size: 1.15rem;
-      color: #1a4731;
-      margin: 1.4rem 0 0.6rem;
-      font-family: Arial, sans-serif;
-    }
-
-    p {
-      margin-bottom: 1rem;
-    }
-
-    .badge-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.8rem;
-      margin: 1.2rem 0;
-    }
-
-    .badge {
-      background: #e8f5e9;
-      border: 1px solid #a5d6a7;
-      border-radius: 4px;
-      padding: 0.4rem 0.9rem;
-      font-size: 0.9rem;
-      font-family: Arial, sans-serif;
-      color: #1a4731;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.95rem;
-      font-family: Arial, sans-serif;
-      margin: 1rem 0;
-    }
-
-    th {
-      background: #2c6e49;
-      color: white;
-      text-align: left;
-      padding: 0.6rem 1rem;
-    }
-
-    td {
-      border: 1px solid #ddd;
-      padding: 0.55rem 1rem;
-      vertical-align: top;
-    }
-
-    tr:nth-child(even) td {
-      background: #f5faf5;
-    }
-
-    pre {
-      background: #f4f4f4;
-      border-left: 4px solid #2c6e49;
-      padding: 1rem 1.2rem;
-      font-size: 0.88rem;
-      overflow-x: auto;
-      margin: 1rem 0;
-      font-family: 'Courier New', monospace;
-    }
-
-    .btn {
-      display: inline-block;
-      background: #2c6e49;
-      color: white;
-      text-decoration: none;
-      padding: 0.6rem 1.4rem;
-      border-radius: 4px;
-      font-family: Arial, sans-serif;
-      font-size: 0.95rem;
-      margin: 0.3rem 0.3rem 0.3rem 0;
-      transition: background 0.2s;
-    }
-
-    .btn:hover {
-      background: #1a4731;
-    }
-
-    .btn.secondary {
-      background: #fff;
-      color: #2c6e49;
-      border: 1px solid #2c6e49;
-    }
-
-    .btn.secondary:hover {
-      background: #e8f5e9;
-    }
-
-    .dataset-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1rem;
-      margin: 1rem 0;
-    }
-
-    .dataset-card {
-      border: 1px solid #a5d6a7;
-      border-radius: 6px;
-      padding: 1rem 1.2rem;
-      background: #f9fdf9;
-    }
-
-    .dataset-card h4 {
-      color: #2c6e49;
-      font-family: Arial, sans-serif;
-      font-size: 1rem;
-      margin-bottom: 0.4rem;
-    }
-
-    .dataset-card p {
-      font-size: 0.88rem;
-      margin-bottom: 0;
-      color: #555;
-    }
-
-    footer {
-      background: #1a4731;
-      color: #c8e6c9;
-      text-align: center;
-      padding: 1.5rem;
-      font-size: 0.88rem;
-      font-family: Arial, sans-serif;
-      margin-top: 4rem;
-    }
-
-    footer a {
-      color: #a5d6a7;
-    }
-
-    .highlight-box {
-      background: #e8f5e9;
-      border-left: 4px solid #2c6e49;
-      padding: 1rem 1.4rem;
-      margin: 1.2rem 0;
-      border-radius: 0 4px 4px 0;
-    }
-
-    .highlight-box p {
-      margin-bottom: 0;
-      font-size: 0.97rem;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutrientKG - Food-Health Knowledge Graph for Disease-Aware Recipe Adaptation</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #34495e;
+            margin-top: 30px;
+            border-bottom: 2px solid #95a5a6;
+            padding-bottom: 5px;
+        }
+        h3 {
+            color: #555;
+            margin-top: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #3498db;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            border-left: 4px solid #3498db;
+        }
+        pre code {
+            background-color: transparent;
+            padding: 0;
+        }
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            margin: 2px;
+            background-color: #3498db;
+            color: white;
+            border-radius: 3px;
+            font-size: 0.85em;
+        }
+        .info-box {
+            background-color: #e8f4f8;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .warning-box {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .nav {
+            background-color: #34495e;
+            padding: 15px;
+            margin: -20px -20px 20px -20px;
+            color: white;
+        }
+        .nav a {
+            color: white;
+            margin-right: 20px;
+        }
+        ul {
+            line-height: 1.8;
+        }
+    </style>
 </head>
 <body>
 
-<header>
-  <div class="inner">
-    <h1>NutrientKG</h1>
-    <p class="tagline">A Food-Health Knowledge Graph for Disease-Aware Ingredient Substitution and Recipe Adaptation</p>
-  </div>
-</header>
-
-<nav>
-  <ul>
-    <li><a href="#overview">Overview</a></li>
-    <li><a href="#datasets">Datasets</a></li>
-    <li><a href="#schema">Schema</a></li>
-    <li><a href="#queries">Query Examples</a></li>
-    <li><a href="#download">Download</a></li>
-    <li><a href="#endpoint">SPARQL Endpoint</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-</nav>
-
-<div class="content">
-
-  <section id="overview">
-    <h2>Overview</h2>
-    <p>
-      NutrientKG is a food-health knowledge graph providing general infrastructure for disease-aware
-      recipe adaptation across chronic disease conditions. Many chronic diseases impose formally defined
-      dietary constraints that evolve as disease progresses through clinical stages. NutrientKG provides
-      an extensible backbone integrating culinary knowledge, nutritional data, validated substitution pairs,
-      and disease staging constraints into a unified queryable resource. In this initial version, NutrientKG
-      is instantiated for Chronic Kidney Disease (CKD), with the CKD implementation serving as a reference
-      for extension to other conditions such as diabetes, heart failure, and hypertension.
-    </p>
-
-    <div class="highlight-box">
-      <p>
-        <strong>General vision:</strong> NutrientKG is designed as an extensible backbone for any chronic
-        disease with formally defined dietary guidelines. The CKD instantiation is the first reference
-        implementation. Future instantiations for diabetes, heart failure, and hypertension are planned,
-        and community contributions of additional disease instantiations are welcome.
-      </p>
-    </div>
-    <div class="highlight-box">
-      <p>
-        <strong>Key capability (CKD instantiation):</strong> NutrientKG can identify ingredient substitutes
-        safe not only at a patient's current CKD stage but across all future stages of disease progression,
-        a query class no existing food knowledge graph supports.
-      </p>
-    </div>
-
-    <p>NutrientKG integrates seven data sources into a unified queryable graph:</p>
-
-    <div class="dataset-grid">
-      <div class="dataset-card">
-        <h4>USDA Nutritional Data</h4>
-        <p>Comprehensive nutrient profiles including phosphorus, potassium, sodium, and protein critical for CKD dietary management.</p>
-      </div>
-      <div class="dataset-card">
-        <h4>Ingredient1M</h4>
-        <p>Large-scale recipe dataset providing culinary context and ingredient co-occurrence relationships.</p>
-      </div>
-      <div class="dataset-card">
-        <h4>Recipe1MSubs</h4>
-        <p>Validated ingredient substitution pairs providing ground truth for substitution recommendation.</p>
-      </div>
-      <div class="dataset-card">
-        <h4>NKF Kidney-Friendly Recipes</h4>
-        <p>227 clinically validated recipes from the National Kidney Foundation, enriched with CKD stage-specific annotations derived from KDIGO guidelines.</p>
-      </div>
-      <div class="dataset-card">
-        <h4>FoodOn</h4>
-        <p>Food ontology used as a pivot for cross-dataset entity alignment and semantic food classification.</p>
-      </div>
-      <div class="dataset-card">
-        <h4>SNOMED CT</h4>
-        <p>Clinical terminology backbone grounding disease-food relationships in a standardized medical coding system.</p>
-      </div>
-      <div class="dataset-card">
-        <h4>KDIGO CKD Staging Constraints</h4>
-        <p>Formally encoded dietary staging constraints from KDIGO clinical guidelines specifying nutrient limits per CKD stage (3b, 4, 5).</p>
-      </div>
-    </div>
-
-    <div class="badge-row">
-      <span class="badge">CKD Dietary Management</span>
-      <span class="badge">Ingredient Substitution</span>
-      <span class="badge">Recipe Adaptation</span>
-      <span class="badge">Disease Progression Awareness</span>
-      <span class="badge">SPARQL Queryable</span>
-      <span class="badge">Open Access</span>
-    </div>
-  </section>
-
-  <section id="datasets">
-    <h2>Datasets and Coverage</h2>
-    <p>NutrientKG substantially extends the coverage of existing food knowledge graphs in both depth
-    (greater entity coverage from core datasets) and breadth (new components absent from prior resources).</p>
-
-    <table>
-      <tr>
-        <th>Component</th>
-        <th>NutrientKG</th>
-        <th>FoodKG</th>
-        <th>Notes</th>
-      </tr>
-      <tr>
-        <td>Recipes</td>
-        <td>[X] recipes</td>
-        <td>Partial subset</td>
-        <td>NutrientKG integrates substantially more recipes</td>
-      </tr>
-      <tr>
-        <td>Ingredients</td>
-        <td>[X] entities</td>
-        <td>[Y] entities</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>Nutritional facts</td>
-        <td>[X] triples</td>
-        <td>[Y] triples</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>Substitution pairs</td>
-        <td>[X] validated pairs</td>
-        <td>Heuristic scores only</td>
-        <td>NutrientKG uses Recipe1MSubs ground truth</td>
-      </tr>
-      <tr>
-        <td>NKF validated recipes</td>
-        <td>227 with stage annotations</td>
-        <td>Not present</td>
-        <td>Enriched with KDIGO stage-specific constraints</td>
-      </tr>
-      <tr>
-        <td>CKD staging constraints</td>
-        <td>[X] constraints across 3 stages</td>
-        <td>Not present</td>
-        <td>Derived from KDIGO 2024 guidelines</td>
-      </tr>
-      <tr>
-        <td>Total triples</td>
-        <td>[X]</td>
-        <td>~67 million</td>
-        <td></td>
-      </tr>
-    </table>
-    <p style="font-size:0.85rem; color:#666;">[X] placeholders will be updated upon final publication.</p>
-  </section>
-
-  <section id="schema">
-    <h2>Schema</h2>
-    <p>NutrientKG defines the following primary entity types and relations:</p>
-
-    <h3>Entity Types</h3>
-    <table>
-      <tr><th>Entity Type</th><th>Description</th></tr>
-      <tr><td>nutrientkg:Ingredient</td><td>A food ingredient with nutritional profile and FoodOn alignment</td></tr>
-      <tr><td>nutrientkg:Recipe</td><td>A culinary recipe with ingredient list and preparation context</td></tr>
-      <tr><td>nutrientkg:NKFRecipe</td><td>A clinically validated kidney-friendly recipe from the National Kidney Foundation</td></tr>
-      <tr><td>nutrientkg:Substitution</td><td>A validated substitution pair from Recipe1MSubs</td></tr>
-      <tr><td>nutrientkg:NutrientFact</td><td>A nutritional measurement for an ingredient from USDA</td></tr>
-      <tr><td>nutrientkg:CKDStage</td><td>A CKD disease stage (3b, 4, 5) with associated dietary constraints</td></tr>
-      <tr><td>nutrientkg:DietaryConstraint</td><td>A KDIGO-derived nutrient threshold for a specific CKD stage</td></tr>
-    </table>
-
-    <h3>Key Relations</h3>
-    <table>
-      <tr><th>Relation</th><th>Domain</th><th>Range</th><th>Description</th></tr>
-      <tr><td>nutrientkg:hasNutrient</td><td>Ingredient</td><td>NutrientFact</td><td>Links ingredient to nutritional measurement</td></tr>
-      <tr><td>nutrientkg:canSubstitute</td><td>Ingredient</td><td>Substitution</td><td>Links to validated substitution pair</td></tr>
-      <tr><td>nutrientkg:hasConstraint</td><td>CKDStage</td><td>DietaryConstraint</td><td>Links stage to its KDIGO nutrient limits</td></tr>
-      <tr><td>nutrientkg:safeForStage</td><td>NKFRecipe</td><td>CKDStage</td><td>Stage annotation derived from KDIGO thresholds</td></tr>
-      <tr><td>nutrientkg:progressesTo</td><td>CKDStage</td><td>CKDStage</td><td>Encodes disease progression trajectory</td></tr>
-      <tr><td>nutrientkg:forbiddenAt</td><td>Ingredient</td><td>CKDStage</td><td>Ingredient violates constraints at this stage</td></tr>
-    </table>
-  </section>
-
-  <section id="queries">
-    <h2>Query Examples</h2>
-    <p>NutrientKG supports four classes of food-health queries via SPARQL. The following examples
-    illustrate queries that existing food knowledge graphs cannot answer.</p>
-
-    <h3>Q1: Retrieve validated substitutes for an ingredient</h3>
-    <pre>SELECT ?substitute ?context WHERE {
-  ?ingredient rdfs:label "chicken"@en .
-  ?ingredient nutrientkg:canSubstitute ?pair .
-  ?pair nutrientkg:substituteIngredient ?substitute ;
-        nutrientkg:recipeContext ?context .
-}</pre>
-
-    <h3>Q2: Find NKF-validated recipes safe for a specific CKD stage</h3>
-    <pre>SELECT ?recipe ?title WHERE {
-  ?recipe a nutrientkg:NKFRecipe ;
-          rdfs:label ?title ;
-          nutrientkg:safeForStage ?stage .
-  ?stage rdfs:label "CKD Stage 4" .
-}</pre>
-
-    <h3>Q3: Find substitutes safe across the full CKD progression trajectory</h3>
-    <pre>SELECT ?substitute WHERE {
-  ?ingredient rdfs:label "chicken"@en .
-  ?ingredient nutrientkg:canSubstitute ?pair .
-  ?pair nutrientkg:substituteIngredient ?substitute .
-  MINUS {
-    ?stage a nutrientkg:CKDStage ;
-           nutrientkg:stageOrder ?order .
-    FILTER(?order >= 3)
-    ?stage nutrientkg:hasConstraint ?constraint .
-    ?constraint nutrientkg:nutrientType ?nutrient ;
-                nutrientkg:maxValue ?limit .
-    ?substitute nutrientkg:hasNutrient ?fact .
-    ?fact nutrientkg:nutrientType ?nutrient ;
-          nutrientkg:value ?value .
-    FILTER(?value > ?limit)
-  }
-}</pre>
-
-    <h3>Q4: Detect substitutes safe today but harmful under disease progression</h3>
-    <pre>SELECT ?substitute ?futureStage WHERE {
-  ?ingredient rdfs:label "chicken"@en .
-  ?ingredient nutrientkg:canSubstitute ?pair .
-  ?pair nutrientkg:substituteIngredient ?substitute .
-  ?currentStage rdfs:label "CKD Stage 3b" ;
-                nutrientkg:hasConstraint ?cc .
-  ?cc nutrientkg:nutrientType ?nutrient ;
-      nutrientkg:maxValue ?currentLimit .
-  ?substitute nutrientkg:hasNutrient ?cf .
-  ?cf nutrientkg:nutrientType ?nutrient ;
-      nutrientkg:value ?value .
-  FILTER(?value &lt;= ?currentLimit)
-  ?futureStage a nutrientkg:CKDStage ;
-               nutrientkg:stageOrder ?order .
-  FILTER(?order > 3)
-  ?futureStage nutrientkg:hasConstraint ?fc .
-  ?fc nutrientkg:nutrientType ?nutrient ;
-      nutrientkg:maxValue ?futureLimit .
-  FILTER(?value > ?futureLimit)
-}</pre>
-  </section>
-
-  <section id="download">
-    <h2>Download</h2>
-    <p>NutrientKG is available as serialized RDF data files and as a full repository.
-    All data is released under a Creative Commons Attribution 4.0 license.</p>
-
-    <a href="#" class="btn">Download NutrientKG (RDF/Turtle)</a>
-    <a href="#" class="btn secondary">GitHub Repository</a>
-    <a href="#" class="btn secondary">Zenodo DOI</a>
-
-    <h3>File Structure</h3>
-    <table>
-      <tr><th>File</th><th>Contents</th><th>Triples</th></tr>
-      <tr><td>nutrientkg-core.ttl</td><td>Recipes, ingredients, substitution pairs</td><td>[X]</td></tr>
-      <tr><td>nutrientkg-usda.ttl</td><td>USDA nutritional facts</td><td>[X]</td></tr>
-      <tr><td>nutrientkg-nkf.ttl</td><td>NKF kidney-friendly recipes with stage annotations</td><td>[X]</td></tr>
-      <tr><td>nutrientkg-ckd.ttl</td><td>KDIGO CKD staging constraints</td><td>[X]</td></tr>
-      <tr><td>nutrientkg-ontology.ttl</td><td>NutrientKG schema ontology</td><td>[X]</td></tr>
-    </table>
-    <p style="font-size:0.85rem; color:#666;">Triple counts will be updated upon final publication.</p>
-  </section>
-
-  <section id="endpoint">
-    <h2>SPARQL Endpoint</h2>
-    <p>A public SPARQL endpoint for NutrientKG is available at:</p>
-    <pre>[SPARQL endpoint URL to be added]</pre>
-    <p>The endpoint supports SPARQL 1.1 SELECT, CONSTRUCT, and ASK queries.
-    Please limit queries to reasonable result sizes and avoid full graph dumps via the endpoint.
-    For bulk access, use the download links above.</p>
-  </section>
-
-  <section id="paper">
-    <h2>Publication</h2>
-    <p>If you use NutrientKG in your research, please cite:</p>
-    <pre>Yakubu, M., [MS Student], and Anyanwu, K. (2026).
-NutrientKG: A Food-Health Knowledge Graph for Disease-Aware
-Ingredient Substitution and Recipe Adaptation.
-In: International Semantic Web Conference (ISWC 2026).
-Springer, LNCS.</pre>
-
-    <a href="#" class="btn">Paper PDF</a>
-    <a href="#" class="btn secondary">BibTeX</a>
-  </section>
-
-  <section id="contact">
-    <h2>Contact</h2>
-    <p>NutrientKG is developed at the Data Intelligence Lab, North Carolina State University.</p>
-    <p>Principal Investigator: Kemafor Anyanwu (<a href="mailto:kogan@ncsu.edu">kogan@ncsu.edu</a>)</p>
-    <p>For questions about the dataset, queries, or collaboration, please open an issue on the
-    <a href="#">GitHub repository</a> or contact us by email.</p>
-  </section>
-
+<div class="nav">
+    <strong>NutrientKG</strong> | 
+    <a href="#overview">Overview</a>
+    <a href="#statistics">Statistics</a>
+    <a href="#schema">Schema</a>
+    <a href="#queries">Queries</a>
+    <a href="#download">Download</a>
+    <a href="#citation">Citation</a>
 </div>
 
-<footer>
-  <p>NutrientKG &mdash; Data Intelligence Lab, North Carolina State University</p>
-  <p style="margin-top:0.5rem;">
-    <a href="#">GitHub</a> &nbsp;|&nbsp;
-    <a href="#">Zenodo</a> &nbsp;|&nbsp;
-    <a href="mailto:kogan@ncsu.edu">Contact</a>
-  </p>
-</footer>
+<h1>NutrientKG: A Food-Health Knowledge Graph for Disease-Aware Recipe Adaptation</h1>
+
+<div class="info-box">
+    <strong>Current Version:</strong> 1.0 (CKD Instantiation) | 
+    <strong>Release Date:</strong> May 2026 | 
+    <strong>License:</strong> <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY 4.0</a> | 
+    <strong>DOI:</strong> Pending (Zenodo)
+</div>
+
+<h2 id="overview">Overview</h2>
+
+<p>NutrientKG is a food-health knowledge graph providing infrastructure for disease-aware recipe adaptation across chronic disease conditions. This initial version instantiates NutrientKG for <strong>Chronic Kidney Disease (CKD)</strong>, integrating culinary knowledge, nutritional data, validated substitution pairs, and disease staging constraints.</p>
+
+<p><strong>Key Capabilities:</strong></p>
+<ul>
+    <li>Nutritional queries over 467,069 USDA FoodData Central entries</li>
+    <li>Validated substitution recommendations with population-level frequency data</li>
+    <li>Disease-diet constraint checking using KDIGO 2024 guidelines</li>
+    <li>Progression-aware dietary safety verification across CKD stages</li>
+</ul>
+
+<h2 id="statistics">Key Statistics</h2>
+
+<table>
+    <tr>
+        <th>Component</th>
+        <th>Count</th>
+        <th>Source</th>
+    </tr>
+    <tr>
+        <td><strong>Recipes</strong></td>
+        <td>1,029,720</td>
+        <td>Recipe1M (full corpus)</td>
+    </tr>
+    <tr>
+        <td><strong>Ingredients (matched)</strong></td>
+        <td>289,760</td>
+        <td>Recipe1M → USDA linkage</td>
+    </tr>
+    <tr>
+        <td><strong>USDA Entries</strong></td>
+        <td>467,069</td>
+        <td>FoodData Central (4 sub-databases)</td>
+    </tr>
+    <tr>
+        <td><strong>Substitution Pairs</strong></td>
+        <td>30,782</td>
+        <td>Recipe1MSubs validated pairs</td>
+    </tr>
+    <tr>
+        <td><strong>NKF Recipes</strong></td>
+        <td>20</td>
+        <td>Clinically validated kidney-friendly</td>
+    </tr>
+    <tr>
+        <td><strong>CKD Stages</strong></td>
+        <td>6</td>
+        <td>KDIGO 2024 guidelines</td>
+    </tr>
+    <tr>
+        <td><strong>Total Triples</strong></td>
+        <td>28,643,619</td>
+        <td>Complete knowledge graph</td>
+    </tr>
+</table>
+
+<p><strong>Coverage:</strong> 42.9% of unique ingredient strings matched to USDA; 89.3% of recipes have partial nutritional coverage.</p>
+
+<h2>Data Sources Integrated</h2>
+
+<ol>
+    <li><strong>USDA FoodData Central</strong> - Nutritional compositions (sodium, potassium, phosphorus, protein)</li>
+    <li><strong>Recipe1M</strong> - 1M+ recipes with ingredient lists</li>
+    <li><strong>Recipe1MSubs</strong> - Validated substitution pairs with frequency data</li>
+    <li><strong>National Kidney Foundation</strong> - Clinically validated kidney-friendly recipes</li>
+    <li><strong>KDIGO 2024</strong> - Clinical practice guidelines for CKD dietary management</li>
+    <li><strong>SNOMED CT</strong> - Clinical terminology for disease staging</li>
+    <li><strong>FoodOn</strong> - Food product taxonomy (structural relationships)</li>
+</ol>
+
+<h2 id="schema">Schema Overview</h2>
+
+<h3>Core Entity Types</h3>
+
+<table>
+    <tr>
+        <th>Entity Type</th>
+        <th>Count</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td><strong>Recipe</strong></td>
+        <td>1,029,720</td>
+        <td>Recipes with ingredient lists from Recipe1M</td>
+    </tr>
+    <tr>
+        <td><strong>NKFRecipe</strong></td>
+        <td>20</td>
+        <td>Subclass of Recipe; clinically validated kidney-friendly recipes</td>
+    </tr>
+    <tr>
+        <td><strong>Ingredient</strong></td>
+        <td>289,760</td>
+        <td>Food items matched to USDA nutritional profiles</td>
+    </tr>
+    <tr>
+        <td><strong>SubstitutionPair</strong></td>
+        <td>30,782</td>
+        <td>Validated substitution pairs with frequency counts</td>
+    </tr>
+    <tr>
+        <td><strong>USDA</strong></td>
+        <td>467,069</td>
+        <td>Nutritional data nodes storing clinical nutrients as properties</td>
+    </tr>
+    <tr>
+        <td><strong>CKDStage</strong></td>
+        <td>6</td>
+        <td>Disease stages (1, 2, 3a, 3b, 4, 5) with KDIGO thresholds</td>
+    </tr>
+    <tr>
+        <td><strong>RiskProfile</strong></td>
+        <td>1,009,042</td>
+        <td>Nutrient violation annotations per ingredient per stage</td>
+    </tr>
+</table>
+
+<h3>Key Properties</h3>
+
+<p><strong>Namespaces:</strong></p>
+<ul>
+    <li>Entities: <code>http://nutrientkg.org/entity/</code></li>
+    <li>Properties: <code>http://nutrientkg.org/property/</code> (prefix: <code>nkgp:</code>)</li>
+</ul>
+
+<p><strong>Recipe-Ingredient Relationships:</strong></p>
+<ul>
+    <li><code>nkgp:has_Ingredient</code> - Links recipes to ingredients</li>
+    <li><code>nkgp:has_amount_grams</code> - Ingredient quantity</li>
+</ul>
+
+<p><strong>Nutritional Properties:</strong></p>
+<ul>
+    <li><code>nkgp:has_usda_entry</code> - Links ingredients to USDA nutritional data</li>
+    <li><code>nkgp:sodium_mg</code> - Sodium content (mg/100g)</li>
+    <li><code>nkgp:potassium_mg</code> - Potassium content (mg/100g)</li>
+    <li><code>nkgp:phosphorus_mg</code> - Phosphorus content (mg/100g)</li>
+    <li><code>nkgp:protein_g</code> - Protein content (g/100g)</li>
+    <li><code>nkgp:phosphorus_source_type</code> - Classification (animal/plant/additive)</li>
+</ul>
+
+<p><strong>Substitution Properties:</strong></p>
+<ul>
+    <li><code>nkgp:substitutes_for</code> - Direct ingredient-to-ingredient substitution link</li>
+    <li><code>nkgp:substitution_source</code> - SubstitutionPair → source ingredient</li>
+    <li><code>nkgp:substitution_target</code> - SubstitutionPair → target ingredient</li>
+    <li><code>nkgp:substitution_frequency</code> - Observation count in Recipe1M</li>
+</ul>
+
+<p><strong>Disease Constraint Properties:</strong></p>
+<ul>
+    <li><code>nkgp:safe_at</code> - Ingredient safe at given CKD stage</li>
+    <li><code>nkgp:restricted_at</code> - Ingredient violates constraints at given stage</li>
+    <li><code>nkgp:has_ckd_risk</code> - Links ingredient to RiskProfile violation details</li>
+    <li><code>nkgp:safeForStage</code> - NKF recipe validated for specific stages</li>
+</ul>
+
+<p><strong>CKD Stage Threshold Properties:</strong></p>
+<ul>
+    <li><code>nkgp:sodium_threshold_mg</code> - Per-meal sodium limit (mg)</li>
+    <li><code>nkgp:potassium_threshold_mg</code> - Per-meal potassium limit (mg)</li>
+    <li><code>nkgp:phosphorus_threshold_mg</code> - Per-meal phosphorus limit (mg)</li>
+    <li><code>nkgp:protein_threshold_g</code> - Per-meal protein limit (g)</li>
+    <li><code>nkgp:guideline_source</code> - Clinical guideline version (KDIGO_2024)</li>
+    <li><code>nkgp:stage_order</code> - Numeric stage ordering for progression queries</li>
+</ul>
+
+<h2>KDIGO 2024 Per-Meal Thresholds</h2>
+
+<p>Thresholds are derived by dividing KDIGO 2024 daily limits by three meals:</p>
+
+<table>
+    <tr>
+        <th>Nutrient</th>
+        <th>Stage 1</th>
+        <th>Stage 2</th>
+        <th>Stage 3a</th>
+        <th>Stage 3b</th>
+        <th>Stage 4</th>
+        <th>Stage 5</th>
+    </tr>
+    <tr>
+        <td>Sodium (mg)</td>
+        <td>767</td>
+        <td>767</td>
+        <td>500</td>
+        <td>500</td>
+        <td>333</td>
+        <td>267</td>
+    </tr>
+    <tr>
+        <td>Potassium (mg)</td>
+        <td>—</td>
+        <td>—</td>
+        <td>—</td>
+        <td>667</td>
+        <td>500</td>
+        <td>500</td>
+    </tr>
+    <tr>
+        <td>Phosphorus - animal/additive (mg)</td>
+        <td>—</td>
+        <td>—</td>
+        <td>—</td>
+        <td>233</td>
+        <td>167</td>
+        <td>167</td>
+    </tr>
+    <tr>
+        <td>Phosphorus - plant (mg)</td>
+        <td>—</td>
+        <td>—</td>
+        <td>—</td>
+        <td>—</td>
+        <td>167</td>
+        <td>167</td>
+    </tr>
+    <tr>
+        <td>Protein (g)</td>
+        <td>—</td>
+        <td>—</td>
+        <td>19</td>
+        <td>14</td>
+        <td>14</td>
+        <td>9</td>
+    </tr>
+</table>
+
+<p><em>Dashes indicate nutrient not actively restricted at that stage.</em></p>
+
+<h2 id="queries">Sample SPARQL Queries</h2>
+
+<h3>Q1: Substitutes by Frequency (Tier 1 - Culinary Knowledge)</h3>
+
+<p>Retrieve validated substitutes for butter ranked by observation frequency:</p>
+
+<pre><code>PREFIX nkg: &lt;http://nutrientkg.org/entity/&gt;
+PREFIX nkgp: &lt;http://nutrientkg.org/property/&gt;
+
+SELECT ?sub ?freq WHERE {
+  ?ing rdfs:label "butter"@en .
+  ?pair rdf:type nkg:SubstitutionPair ;
+        nkgp:substitution_source ?ing ;
+        nkgp:substitution_target ?sub ;
+        nkgp:substitution_frequency ?freq .
+}
+ORDER BY DESC(?freq)</code></pre>
+
+<p><strong>Results:</strong> olive oil (547), margarine (320), coconut oil (156)</p>
+
+<h3>Q2: Recipe Nutrient Profile (Tier 1)</h3>
+
+<p>Get complete nutrient profile for all ingredients in a recipe:</p>
+
+<pre><code>PREFIX nkg: &lt;http://nutrientkg.org/entity/&gt;
+PREFIX nkgp: &lt;http://nutrientkg.org/property/&gt;
+
+SELECT ?ing ?sodium ?potassium ?phosphorus ?protein WHERE {
+  ?recipe rdfs:label "chicken stir fry"@en ;
+          nkgp:has_Ingredient ?ing .
+  ?ing nkgp:has_usda_entry ?usda .
+  ?usda nkgp:sodium_mg ?sodium ;
+        nkgp:potassium_mg ?potassium ;
+        nkgp:phosphorus_mg ?phosphorus ;
+        nkgp:protein_g ?protein .
+}</code></pre>
+
+<h3>Q5: Recipe Violations at Stage (Tier 2 - CKD Constraints)</h3>
+
+<p>Identify ingredients violating KDIGO constraints at Stage 3b:</p>
+
+<pre><code>PREFIX nkg: &lt;http://nutrientkg.org/entity/&gt;
+PREFIX nkgp: &lt;http://nutrientkg.org/property/&gt;
+
+SELECT ?ing ?risk_type WHERE {
+  ?recipe rdfs:label "chicken stir fry"@en ;
+          nkgp:has_Ingredient ?ing .
+  ?ing nkgp:has_ckd_risk ?risk .
+  ?risk nkgp:at_stage nkg:stage_3b ;
+        nkgp:risk_type ?risk_type .
+}</code></pre>
+
+<p><strong>Results:</strong> soy sauce (914mg sodium vs 500mg limit), chicken breast (228mg phosphorus vs 233mg), chicken broth (343mg sodium)</p>
+
+<h3>Q6: Safe Across Progression (Tier 3 - Both Knowledge Types)</h3>
+
+<p>Find substitutes safe across all stages from 3b onward:</p>
+
+<pre><code>PREFIX nkg: &lt;http://nutrientkg.org/entity/&gt;
+PREFIX nkgp: &lt;http://nutrientkg.org/property/&gt;
+
+SELECT ?sub (COUNT(?pair) AS ?freq) WHERE {
+  ?ing rdfs:label "chicken"@en .
+  ?pair rdf:type nkg:SubstitutionPair ;
+        nkgp:substitution_source ?ing ;
+        nkgp:substitution_target ?sub .
+  MINUS {
+    ?stage a nkg:CKDStage ;
+           nkgp:stage_order ?ord .
+    FILTER(?ord >= 3)
+    ?sub nkgp:has_usda_entry ?usda .
+    ?usda nkgp:sodium_mg ?sodium .
+    ?stage nkgp:sodium_threshold_mg ?lim .
+    FILTER(?sodium > ?lim)
+  }
+}
+GROUP BY ?sub
+ORDER BY DESC(?freq)</code></pre>
+
+<p><strong>Results:</strong> turkey (13), canned chicken (5)</p>
+
+<h2 id="download">Download & Access</h2>
+
+<div class="warning-box">
+    <strong>Note:</strong> Download links and SPARQL endpoint will be activated upon paper acceptance.
+</div>
+
+<h3>Planned Resources</h3>
+
+<ul>
+    <li><strong>RDF Dump:</strong> Full knowledge graph in Turtle, RDF/XML, N-Triples, and JSON-LD formats</li>
+    <li><strong>SPARQL Endpoint:</strong> Public queryable endpoint supporting SPARQL 1.1</li>
+    <li><strong>GitHub Repository:</strong> https://github.com/nutrientkg/nutrientkg</li>
+    <li><strong>Documentation:</strong> Full technical documentation and examples</li>
+    <li><strong>DOI:</strong> Permanent identifier via Zenodo</li>
+</ul>
+
+<h3>SNOMED CT Integration</h3>
+
+<p>CKD stage concepts are linked via <code>owl:sameAs</code> to SNOMED CT clinical terminology:</p>
+
+<ul>
+    <li>Stage 1: <code>http://snomed.info/id/431855005</code></li>
+    <li>Stage 2: <code>http://snomed.info/id/431856006</code></li>
+    <li>Stage 3a: <code>http://snomed.info/id/700378005</code></li>
+    <li>Stage 3b: <code>http://snomed.info/id/700379002</code></li>
+    <li>Stage 4: <code>http://snomed.info/id/431857002</code></li>
+    <li>Stage 5: <code>http://snomed.info/id/433146000</code></li>
+</ul>
+
+<h2 id="citation">Citation</h2>
+
+<p>If you use NutrientKG in your research, please cite:</p>
+
+<pre><code>@inproceedings{nutrientkg2026,
+  title={NutrientKG: A Food-Health Knowledge Graph for 
+         Disease-Aware Recipe Adaptation},
+  author={[Authors - to be added]},
+  booktitle={Proceedings of the 25th International Semantic 
+             Web Conference (ISWC 2026)},
+  year={2026},
+  note={Resource Track}
+}</code></pre>
+
+<h2>Comparison with Existing Resources</h2>
+
+<table>
+    <tr>
+        <th>Feature</th>
+        <th>NutrientKG</th>
+        <th>FoodKG</th>
+    </tr>
+    <tr>
+        <td>Recipes</td>
+        <td>1,029,720</td>
+        <td>69,223</td>
+    </tr>
+    <tr>
+        <td>USDA-linked ingredients</td>
+        <td>289,760</td>
+        <td>2,723</td>
+    </tr>
+    <tr>
+        <td>USDA entries</td>
+        <td>467,069 (FDC)</td>
+        <td>7,793 (SR Legacy)</td>
+    </tr>
+    <tr>
+        <td>Validated substitution pairs</td>
+        <td>30,782</td>
+        <td>—</td>
+    </tr>
+    <tr>
+        <td>Disease staging constraints</td>
+        <td>✓ (CKD)</td>
+        <td>✗</td>
+    </tr>
+    <tr>
+        <td>Progression-aware queries</td>
+        <td>✓</td>
+        <td>✗</td>
+    </tr>
+</table>
+
+<h2>License</h2>
+
+<p>NutrientKG is released under <strong>Creative Commons Attribution 4.0 International (CC-BY 4.0)</strong>.</p>
+
+<p>You are free to:</p>
+<ul>
+    <li><strong>Share</strong> — copy and redistribute the material</li>
+    <li><strong>Adapt</strong> — remix, transform, and build upon the material</li>
+</ul>
+
+<p>Under the following terms:</p>
+<ul>
+    <li><strong>Attribution</strong> — You must give appropriate credit and indicate if changes were made</li>
+</ul>
+
+<p>Full license: <a href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></p>
+
+<h2>Contact</h2>
+
+<p><strong>Principal Investigator:</strong> Kemafor Anyanwu, NC State University</p>
+
+<p>For questions, bug reports, or collaboration inquiries:</p>
+<ul>
+    <li><strong>GitHub Issues:</strong> https://github.com/nutrientkg/nutrientkg/issues</li>
+    <li><strong>Email:</strong> kogan@ncsu.edu</li>
+</ul>
+
+<h2>Acknowledgments</h2>
+
+<p>Data sources:</p>
+<ul>
+    <li>USDA FoodData Central</li>
+    <li>Recipe1M dataset (Marin et al.)</li>
+    <li>Recipe1MSubs dataset (Fatemi et al.)</li>
+    <li>National Kidney Foundation</li>
+    <li>KDIGO Clinical Practice Guidelines</li>
+    <li>SNOMED CT (IHTSDO)</li>
+    <li>FoodOn ontology</li>
+</ul>
+
+<hr>
+
+<p style="text-align: center; color: #7f8c8d; margin-top: 40px;">
+    <strong>NutrientKG</strong> — Data Intelligence Lab, North Carolina State University<br>
+    Last Updated: May 2026 | Version 1.0
+</p>
 
 </body>
 </html>
