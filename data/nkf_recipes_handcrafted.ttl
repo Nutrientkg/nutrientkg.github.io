@@ -1,0 +1,246 @@
+@prefix nutrientkg: <http://nutrientkg.github.io/entity/> .
+@prefix nkgp:       <http://nutrientkg.github.io/property/> .
+@prefix rdf:        <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:       <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:        <http://www.w3.org/2001/XMLSchema#> .
+
+nutrientkg:NationalKidneyFoundation
+    rdf:type       nutrientkg:Organization ;
+    rdfs:label     "National Kidney Foundation"@en ;
+    nkgp:sourceURL "https://www.kidney.org"^^xsd:anyURI .
+
+nutrientkg:nkf_recipe_chicken_and_cabbage_mexican_skillet
+    rdf:type                     nutrientkg:NKFRecipe ;
+    rdf:type                     nutrientkg:Recipe ;
+    rdfs:label                   "Chicken and Cabbage Mexican Skillet"@en ;
+    nkgp:sourceURL               "https://www.kidney.org/nutrition/recipes/chicken-and-cabbage-mexican-skillet"^^xsd:anyURI ;
+    nkgp:servings                "4"^^xsd:integer ;
+    nkgp:validatedBy             nutrientkg:NationalKidneyFoundation ;
+    nkgp:hasDietaryLabel         "low-potassium"@en ;
+    nkgp:hasDietaryLabel         "low-sodium"@en ;
+    nkgp:sodium_per_serving      "150.0"^^xsd:decimal ;
+    nkgp:potassium_per_serving   "320.0"^^xsd:decimal ;
+    nkgp:phosphorus_per_serving  "190.0"^^xsd:decimal ;
+    nkgp:protein_per_serving     "22.0"^^xsd:decimal ;
+    nkgp:has_ingredient          nutrientkg:ingredient_chicken_breast ;
+    nkgp:has_ingredient          nutrientkg:ingredient_cabbage ;
+    nkgp:has_ingredient          nutrientkg:ingredient_onion ;
+    nkgp:has_ingredient          nutrientkg:ingredient_olive_oil ;
+    nkgp:has_ingredient          nutrientkg:ingredient_paprika ;
+    nkgp:has_ingredient          nutrientkg:ingredient_cumin ;
+    nkgp:has_ingredient          nutrientkg:ingredient_lemon ;
+    nkgp:safe_at                 nutrientkg:stage_1 ;
+    nkgp:safe_at                 nutrientkg:stage_2 .
+
+nutrientkg:nkf_recipe_chocolate_zucchini_brownies
+    rdf:type                     nutrientkg:NKFRecipe ;
+    rdf:type                     nutrientkg:Recipe ;
+    rdfs:label                   "Chocolate Zucchini Brownies"@en ;
+    nkgp:sourceURL               "https://www.kidney.org/nutrition/recipes/chocolate-zucchini-brownies"^^xsd:anyURI ;
+    nkgp:servings                "8"^^xsd:integer ;
+    nkgp:validatedBy             nutrientkg:NationalKidneyFoundation ;
+    nkgp:hasDietaryLabel         "low-phosphorus"@en ;
+    nkgp:hasDietaryLabel         "low-sodium"@en ;
+    nkgp:sodium_per_serving      "73.3"^^xsd:decimal ;
+    nkgp:potassium_per_serving   "343.3"^^xsd:decimal ;
+    nkgp:phosphorus_per_serving  "95.0"^^xsd:decimal ;
+    nkgp:protein_per_serving     "6.7"^^xsd:decimal ;
+    nkgp:has_ingredient          nutrientkg:ingredient_zucchini ;
+    nkgp:has_ingredient          nutrientkg:ingredient_eggs ;
+    nkgp:has_ingredient          nutrientkg:ingredient_cocoa_powder ;
+    nkgp:has_ingredient          nutrientkg:ingredient_almond_flour ;
+    nkgp:has_ingredient          nutrientkg:ingredient_butter ;
+    nkgp:has_ingredient          nutrientkg:ingredient_sugar ;
+    nkgp:has_ingredient          nutrientkg:ingredient_baking_powder ;
+    nkgp:has_ingredient          nutrientkg:ingredient_chocolate_chips ;
+    nkgp:safe_at                 nutrientkg:stage_1 ;
+    nkgp:safe_at                 nutrientkg:stage_2 ;
+    nkgp:safe_at                 nutrientkg:stage_3a ;
+    nkgp:safe_at                 nutrientkg:stage_3b ;
+    nkgp:safe_at                 nutrientkg:stage_4 ;
+    nkgp:safe_at                 nutrientkg:stage_5 .
+
+nutrientkg:nkf_recipe_zucchini_bread
+    rdf:type                     nutrientkg:NKFRecipe ;
+    rdf:type                     nutrientkg:Recipe ;
+    rdfs:label                   "Zucchini Bread"@en ;
+    nkgp:sourceURL               "https://www.kidney.org/nutrition/recipes/zucchini-bread"^^xsd:anyURI ;
+    nkgp:servings                "16"^^xsd:integer ;
+    nkgp:validatedBy             nutrientkg:NationalKidneyFoundation ;
+    nkgp:hasDietaryLabel         "low-sodium"@en ;
+    nkgp:hasDietaryLabel         "low-phosphorus"@en ;
+    nkgp:hasDietaryLabel         "low-potassium"@en ;
+    nkgp:sodium_per_serving      "100.0"^^xsd:decimal ;
+    nkgp:potassium_per_serving   "128.0"^^xsd:decimal ;
+    nkgp:phosphorus_per_serving  "78.0"^^xsd:decimal ;
+    nkgp:protein_per_serving     "4.4"^^xsd:decimal ;
+    nkgp:has_ingredient          nutrientkg:ingredient_eggs ;
+    nkgp:has_ingredient          nutrientkg:ingredient_sugar ;
+    nkgp:has_ingredient          nutrientkg:ingredient_applesauce ;
+    nkgp:has_ingredient          nutrientkg:ingredient_zucchini ;
+    nkgp:has_ingredient          nutrientkg:ingredient_vanilla ;
+    nkgp:has_ingredient          nutrientkg:ingredient_flour ;
+    nkgp:has_ingredient          nutrientkg:ingredient_baking_powder ;
+    nkgp:has_ingredient          nutrientkg:ingredient_baking_soda ;
+    nkgp:has_ingredient          nutrientkg:ingredient_cinnamon ;
+    nkgp:has_ingredient          nutrientkg:ingredient_ginger ;
+    nkgp:has_ingredient          nutrientkg:ingredient_walnuts ;
+    nkgp:safe_at                 nutrientkg:stage_1 ;
+    nkgp:safe_at                 nutrientkg:stage_2 ;
+    nkgp:safe_at                 nutrientkg:stage_3a ;
+    nkgp:safe_at                 nutrientkg:stage_3b ;
+    nkgp:safe_at                 nutrientkg:stage_4 ;
+    nkgp:safe_at                 nutrientkg:stage_5 .
+
+nutrientkg:nkf_recipe_mexican_zucchini_and_corn
+    rdf:type                     nutrientkg:NKFRecipe ;
+    rdf:type                     nutrientkg:Recipe ;
+    rdfs:label                   "Mexican Zucchini and Corn"@en ;
+    nkgp:sourceURL               "https://www.kidney.org/nutrition/recipes/mexican-zucchini-and-corn"^^xsd:anyURI ;
+    nkgp:servings                "4"^^xsd:integer ;
+    nkgp:validatedBy             nutrientkg:NationalKidneyFoundation ;
+    nkgp:hasDietaryLabel         "low-sodium"@en ;
+    nkgp:sodium_per_serving      "59.0"^^xsd:decimal ;
+    nkgp:potassium_per_serving   "263.0"^^xsd:decimal ;
+    nkgp:phosphorus_per_serving  "97.0"^^xsd:decimal ;
+    nkgp:protein_per_serving     "4.0"^^xsd:decimal ;
+    nkgp:has_ingredient          nutrientkg:ingredient_zucchini ;
+    nkgp:has_ingredient          nutrientkg:ingredient_onion ;
+    nkgp:has_ingredient          nutrientkg:ingredient_vegetable_oil ;
+    nkgp:has_ingredient          nutrientkg:ingredient_tomatoes ;
+    nkgp:has_ingredient          nutrientkg:ingredient_corn ;
+    nkgp:has_ingredient          nutrientkg:ingredient_pepper ;
+    nkgp:has_ingredient          nutrientkg:ingredient_milk ;
+    nkgp:has_ingredient          nutrientkg:ingredient_cheddar_cheese ;
+    nkgp:has_ingredient          nutrientkg:ingredient_chile ;
+    nkgp:safe_at                 nutrientkg:stage_1 ;
+    nkgp:safe_at                 nutrientkg:stage_2 ;
+    nkgp:safe_at                 nutrientkg:stage_3a ;
+    nkgp:safe_at                 nutrientkg:stage_3b ;
+    nkgp:safe_at                 nutrientkg:stage_4 ;
+    nkgp:safe_at                 nutrientkg:stage_5 .
+
+nutrientkg:nkf_recipe_onion_bagel_chips
+    rdf:type                     nutrientkg:NKFRecipe ;
+    rdf:type                     nutrientkg:Recipe ;
+    rdfs:label                   "Onion Bagel Chips"@en ;
+    nkgp:sourceURL               "https://www.kidney.org/nutrition/recipes/onion-bagel-chips"^^xsd:anyURI ;
+    nkgp:servings                "4"^^xsd:integer ;
+    nkgp:validatedBy             nutrientkg:NationalKidneyFoundation ;
+    nkgp:hasDietaryLabel         "low-phosphorus"@en ;
+    nkgp:hasDietaryLabel         "low-potassium"@en ;
+    nkgp:hasDietaryLabel         "low-sodium"@en ;
+    nkgp:sodium_per_serving      "325.0"^^xsd:decimal ;
+    nkgp:potassium_per_serving   "105.0"^^xsd:decimal ;
+    nkgp:phosphorus_per_serving  "80.0"^^xsd:decimal ;
+    nkgp:protein_per_serving     "6.0"^^xsd:decimal ;
+    nkgp:has_ingredient          nutrientkg:ingredient_plain_bagels ;
+    nkgp:has_ingredient          nutrientkg:ingredient_margarine ;
+    nkgp:has_ingredient          nutrientkg:ingredient_onion_powder ;
+    nkgp:safe_at                 nutrientkg:stage_1 ;
+    nkgp:safe_at                 nutrientkg:stage_2 ;
+    nkgp:safe_at                 nutrientkg:stage_3a ;
+    nkgp:safe_at                 nutrientkg:stage_3b ;
+    nkgp:safe_at                 nutrientkg:stage_4 .
+
+nutrientkg:nkf_recipe_mexican_rice_with_bell_peppers
+    rdf:type                     nutrientkg:NKFRecipe ;
+    rdf:type                     nutrientkg:Recipe ;
+    rdfs:label                   "Mexican Rice with Bell Peppers"@en ;
+    nkgp:sourceURL               "https://www.kidney.org/nutrition/recipes/mexican-rice-bell-peppers"^^xsd:anyURI ;
+    nkgp:servings                "4"^^xsd:integer ;
+    nkgp:validatedBy             nutrientkg:NationalKidneyFoundation ;
+    nkgp:hasDietaryLabel         "low-phosphorus"@en ;
+    nkgp:hasDietaryLabel         "low-potassium"@en ;
+    nkgp:sodium_per_serving      "40.0"^^xsd:decimal ;
+    nkgp:potassium_per_serving   "140.0"^^xsd:decimal ;
+    nkgp:phosphorus_per_serving  "90.0"^^xsd:decimal ;
+    nkgp:protein_per_serving     "4.0"^^xsd:decimal ;
+    nkgp:has_ingredient          nutrientkg:ingredient_rice ;
+    nkgp:has_ingredient          nutrientkg:ingredient_water ;
+    nkgp:has_ingredient          nutrientkg:ingredient_bell_pepper ;
+    nkgp:has_ingredient          nutrientkg:ingredient_olive_oil ;
+    nkgp:has_ingredient          nutrientkg:ingredient_cumin ;
+    nkgp:has_ingredient          nutrientkg:ingredient_paprika ;
+    nkgp:safe_at                 nutrientkg:stage_1 ;
+    nkgp:safe_at                 nutrientkg:stage_2 ;
+    nkgp:safe_at                 nutrientkg:stage_3a ;
+    nkgp:safe_at                 nutrientkg:stage_3b ;
+    nkgp:safe_at                 nutrientkg:stage_4 ;
+    nkgp:safe_at                 nutrientkg:stage_5 .
+
+nutrientkg:nkf_recipe_pancakes
+    rdf:type                     nutrientkg:NKFRecipe ;
+    rdf:type                     nutrientkg:Recipe ;
+    rdfs:label                   "Pancakes"@en ;
+    nkgp:sourceURL               "https://www.kidney.org/nutrition/recipes/pancakes"^^xsd:anyURI ;
+    nkgp:servings                "4"^^xsd:integer ;
+    nkgp:validatedBy             nutrientkg:NationalKidneyFoundation ;
+    nkgp:hasDietaryLabel         "low-sodium"@en ;
+    nkgp:hasDietaryLabel         "low-phosphorus"@en ;
+    nkgp:hasDietaryLabel         "low-potassium"@en ;
+    nkgp:sodium_per_serving      "434.0"^^xsd:decimal ;
+    nkgp:potassium_per_serving   "93.0"^^xsd:decimal ;
+    nkgp:phosphorus_per_serving  "236.0"^^xsd:decimal ;
+    nkgp:protein_per_serving     "6.0"^^xsd:decimal ;
+    nkgp:has_ingredient          nutrientkg:ingredient_sugar ;
+    nkgp:has_ingredient          nutrientkg:ingredient_egg ;
+    nkgp:has_ingredient          nutrientkg:ingredient_water ;
+    nkgp:has_ingredient          nutrientkg:ingredient_flour ;
+    nkgp:has_ingredient          nutrientkg:ingredient_milk ;
+    nkgp:has_ingredient          nutrientkg:ingredient_butter ;
+    nkgp:safe_at                 nutrientkg:stage_1 ;
+    nkgp:safe_at                 nutrientkg:stage_2 ;
+    nkgp:safe_at                 nutrientkg:stage_3a .
+
+nutrientkg:nkf_recipe_chili_wheat_treats
+    rdf:type                     nutrientkg:NKFRecipe ;
+    rdf:type                     nutrientkg:Recipe ;
+    rdfs:label                   "Chili Wheat Treats"@en ;
+    nkgp:sourceURL               "https://www.kidney.org/nutrition/recipes/chili-wheat-treats"^^xsd:anyURI ;
+    nkgp:servings                "8"^^xsd:integer ;
+    nkgp:validatedBy             nutrientkg:NationalKidneyFoundation ;
+    nkgp:hasDietaryLabel         "low-phosphorus"@en ;
+    nkgp:hasDietaryLabel         "low-potassium"@en ;
+    nkgp:hasDietaryLabel         "low-sodium"@en ;
+    nkgp:sodium_per_serving      "90.0"^^xsd:decimal ;
+    nkgp:potassium_per_serving   "0.0"^^xsd:decimal ;
+    nkgp:phosphorus_per_serving  "90.0"^^xsd:decimal ;
+    nkgp:protein_per_serving     "3.0"^^xsd:decimal ;
+    nkgp:has_ingredient          nutrientkg:ingredient_margarine ;
+    nkgp:has_ingredient          nutrientkg:ingredient_chili_powder ;
+    nkgp:has_ingredient          nutrientkg:ingredient_cumin ;
+    nkgp:has_ingredient          nutrientkg:ingredient_garlic_powder ;
+    nkgp:has_ingredient          nutrientkg:ingredient_es_cayenne_powder ;
+    nkgp:has_ingredient          nutrientkg:ingredient_shredded_wheat ;
+    nkgp:safe_at                 nutrientkg:stage_1 ;
+    nkgp:safe_at                 nutrientkg:stage_2 ;
+    nkgp:safe_at                 nutrientkg:stage_3a ;
+    nkgp:safe_at                 nutrientkg:stage_3b ;
+    nkgp:safe_at                 nutrientkg:stage_4 ;
+    nkgp:safe_at                 nutrientkg:stage_5 .
+
+nutrientkg:nkf_recipe_banana_berry_pancakes
+    rdf:type                     nutrientkg:NKFRecipe ;
+    rdf:type                     nutrientkg:Recipe ;
+    rdfs:label                   "Banana Berry Pancakes"@en ;
+    nkgp:sourceURL               "https://www.kidney.org/nutrition/recipes/banana-berry-pancakes"^^xsd:anyURI ;
+    nkgp:servings                "4"^^xsd:integer ;
+    nkgp:validatedBy             nutrientkg:NationalKidneyFoundation ;
+    nkgp:hasDietaryLabel         "low-sodium"@en ;
+    nkgp:hasDietaryLabel         "low-potassium"@en ;
+    nkgp:sodium_per_serving      "327.0"^^xsd:decimal ;
+    nkgp:potassium_per_serving   "253.3"^^xsd:decimal ;
+    nkgp:phosphorus_per_serving  "17.6"^^xsd:decimal ;
+    nkgp:protein_per_serving     "2.7"^^xsd:decimal ;
+    nkgp:has_ingredient          nutrientkg:ingredient_banana ;
+    nkgp:has_ingredient          nutrientkg:ingredient_flour ;
+    nkgp:has_ingredient          nutrientkg:ingredient_water ;
+    nkgp:has_ingredient          nutrientkg:ingredient_nonstick_cooking_spray ;
+    nkgp:has_ingredient          nutrientkg:ingredient_strawberries ;
+    nkgp:has_ingredient          nutrientkg:ingredient_jam ;
+    nkgp:safe_at                 nutrientkg:stage_1 ;
+    nkgp:safe_at                 nutrientkg:stage_2 ;
+    nkgp:safe_at                 nutrientkg:stage_3a ;
+    nkgp:safe_at                 nutrientkg:stage_3b ;
+    nkgp:safe_at                 nutrientkg:stage_4 .
