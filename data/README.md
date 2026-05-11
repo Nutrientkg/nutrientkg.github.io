@@ -2,15 +2,6 @@
 
 ---
 
-## Full Knowledge Graph
-
-The complete NutrientKG graph (28,047,658 triples, ~4GB) is hosted on Zenodo:
-
-**Zenodo DOI:** *(update after publishing)*  
-**Download:** `nutrientkg_full.nt` (N-Triples format)
-
----
-
 ## Files in this directory
 
 ### `nutrientkg_sample.nt`
