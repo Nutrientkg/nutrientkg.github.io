@@ -5,7 +5,6 @@
 NutrientKG integrates culinary knowledge, USDA nutritional data, validated ingredient substitution pairs from Recipe1M, and KDIGO 2024 clinical staging constraints to enable CKD-stage-aware dietary guidance.
 
 **Website:** https://nutrientkg.github.io  
-**Full graph (Zenodo):** *(update after publishing)*
 
 ---
 
@@ -132,6 +131,6 @@ Each stage node carries a SNOMED CT `owl:sameAs` alignment to the corresponding 
 
 ## Reproduce the Graph
 
-See `code/README.md` for the full pipeline run order and input file download links.
+See `code/README.md` for the full pipeline run order.
 
 ---
