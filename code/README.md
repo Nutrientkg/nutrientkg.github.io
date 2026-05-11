@@ -122,20 +122,6 @@ Ingredients with no violations receive `nkgp:safe_at` to the stage node.
 Ingredients with violations receive `nkgp:restricted_at` and a reified
 `RiskProfile` node via `nkgp:has_ckd_risk`.
 
----
-
-## NKF Integration Notes
-
-- Only 9 of 20 recipes in the markdown table are integrated — the verified ones
-- Servings and tags are confirmed from NKF page content
-- Nutrient values are scraped from NKF page nutrition panels (dietitian-verified)
-  not computed from USDA data
-- Mexican Rice with Bell Peppers has no nutrition panel — values recorded manually
-- Ingredient mapping uses rapidfuzz token_sort_ratio at threshold 80
-- Manual overrides in NKF2 fix known bad fuzzy matches
-
----
-
 ## Dependencies
 
 ```
