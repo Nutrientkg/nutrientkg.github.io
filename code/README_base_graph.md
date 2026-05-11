@@ -125,27 +125,6 @@ ordering across four sub-databases.
 
 ---
 
-## Key Design Decisions
-
-**FoodKG excluded from final pipeline.** FoodKG does not provide a
-downloadable RDF dump — it must be built from Recipe1M using Python 3.7
-build scripts. The USDA links it provides are covered by the A2/A3
-matcher. FoodOn links from this base graph are preserved in
-`graph_triples_with_foodon.json` and passed through to the main pipeline
-where they serve RGCN message passing only and are isolated from the
-clinical reasoning layer.
-
-**Stage-qualified substitutions.** A substitution source → target is
-included at stage X only if the target has zero active risk flags at that
-stage. No severity gradation — any risk flag at that stage excludes the
-pair. This is stricter than the main pipeline's `safe_substitute_at_stage_X`
-edges which use the same logic via the KDIGO violation check in Cell A4.
-
-**Mock data fallback.** If any input file is missing the pipeline falls
-back to mock data covering ~100 common ingredients and 4 sample recipes.
-This allows the pipeline to run without the full datasets for testing.
-
----
 
 ## Dependencies
 
