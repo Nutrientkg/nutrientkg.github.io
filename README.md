@@ -135,15 +135,3 @@ Each stage node carries a SNOMED CT `owl:sameAs` alignment to the corresponding 
 See `code/README.md` for the full pipeline run order and input file download links.
 
 ---
-
-## Citation
-
-```bibtex
-@misc{nutrientkg2026,
-  title     = {NutrientKG: A Food-Health Knowledge Graph for
-               Disease-Aware Recipe Adaptation},
-  author    = {Koul, Vedantt and Anyanwu, Kemafor},
-  year      = {2026},
-  institution = {North Carolina State University}
-}
-```

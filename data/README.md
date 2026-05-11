@@ -78,20 +78,3 @@ print(f"Loaded {len(g):,} triples")
 | FoodOn classes used | 10,383 |
 | NKF recipes | 9 |
 | SNOMED CT alignments | 6 |
-
----
-
-## Citation
-
-If you use NutrientKG please cite:
-
-```bibtex
-@misc{nutrientkg2026,
-  title     = {NutrientKG: A Food-Health Knowledge Graph for
-               Disease-Aware Recipe Adaptation},
-  author    = {Koul, Vedantt and Anyanwu, Kemafor},
-  year      = {2026},
-  publisher = {Zenodo},
-  doi       = {UPDATE_AFTER_PUBLISHING}
-}
-```
