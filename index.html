@@ -166,53 +166,78 @@
     </tr>
     <tr>
         <td><strong>Recipes</strong></td>
-        <td>1,029,720</td>
-        <td>Recipe1M (full corpus)</td>
+        <td>1,029,568</td>
+        <td>Recipe1M</td>
     </tr>
     <tr>
-        <td><strong>Ingredients (matched)</strong></td>
-        <td>289,760</td>
+        <td><strong>Unique ingredients</strong></td>
+        <td>675,940</td>
+        <td>Recipe1M (original strings)</td>
+    </tr>
+    <tr>
+        <td><strong>Ingredients matched to FDC</strong></td>
+        <td>289,760 (42.9%)</td>
         <td>Recipe1M → USDA linkage</td>
     </tr>
     <tr>
-        <td><strong>USDA Entries</strong></td>
+        <td><strong>USDA entries</strong></td>
         <td>467,069</td>
         <td>FoodData Central (4 sub-databases)</td>
     </tr>
     <tr>
-        <td><strong>Substitution Pairs</strong></td>
+        <td><strong>Substitution pairs</strong></td>
         <td>30,782</td>
-        <td>Recipe1MSubs validated pairs</td>
+        <td>Recipe1MSubs (70,520 observations)</td>
     </tr>
     <tr>
-        <td><strong>NKF Recipes</strong></td>
-        <td>20</td>
-        <td>Clinically validated kidney-friendly</td>
+        <td><strong>Safe substitution edges</strong></td>
+        <td>116,786</td>
+        <td>KDIGO-validated across all stages</td>
     </tr>
     <tr>
-        <td><strong>CKD Stages</strong></td>
+        <td><strong>Clinical risk nodes</strong></td>
+        <td>1,009,042</td>
+        <td>Per-ingredient per-stage violations</td>
+    </tr>
+    <tr>
+        <td><strong>NKF verified recipes</strong></td>
+        <td>9</td>
+        <td>National Kidney Foundation (dietitian-verified)</td>
+    </tr>
+    <tr>
+        <td><strong>CKD stages</strong></td>
         <td>6</td>
         <td>KDIGO 2024 guidelines</td>
     </tr>
     <tr>
-        <td><strong>Total Triples</strong></td>
-        <td>28,643,619</td>
+        <td><strong>SNOMED CT alignments</strong></td>
+        <td>6</td>
+        <td>One per CKD stage node</td>
+    </tr>
+    <tr>
+        <td><strong>FoodOn classes linked</strong></td>
+        <td>10,383</td>
+        <td>FoodOn ontology (FOODON_03 namespace)</td>
+    </tr>
+    <tr>
+        <td><strong>Total triples</strong></td>
+        <td>28,047,658</td>
         <td>Complete knowledge graph</td>
     </tr>
 </table>
 
-<p><strong>Coverage:</strong> 42.9% of unique ingredient strings matched to USDA; 89.3% of recipes have partial nutritional coverage.</p>
+<p><strong>Coverage:</strong> 42.9% of unique ingredient strings matched to USDA; 89.3% of recipes have at least one ingredient with linked nutritional data.</p>
 
 <h2>Data Sources Integrated</h2>
 
 <ol>
-    <li><strong>USDA FoodData Central</strong> - Nutritional compositions (sodium, potassium, phosphorus, protein)</li>
-    <li><strong>Recipe1M</strong> - 1M+ recipes with ingredient lists</li>
-    <li><strong>Recipe1MSubs</strong> - Validated substitution pairs with frequency data</li>
-    <li><strong>National Kidney Foundation</strong> - Clinically validated kidney-friendly recipes</li>
-    <li><strong>KDIGO 2024</strong> - Clinical practice guidelines for CKD dietary management</li>
-    <li><strong>SNOMED CT</strong> - Clinical terminology for disease staging</li>
-    <li><strong>FoodOn</strong> - Food product taxonomy (structural relationships)</li>
+    <li><strong>USDA FoodData Central</strong>: Nutritional compositions (sodium, potassium, phosphorus, protein)</li>
+    <li><strong>Recipe1M</strong>: 1M+ recipes with ingredient lists</li>
+    <li><strong>Recipe1MSubs</strong>: Validated substitution pairs with frequency data</li>
+    <li><strong>National Kidney Foundation</strong>: 9 clinically verified kidney-friendly recipes</li>
+    <li><strong>KDIGO 2024</strong>: Clinical practice guidelines for CKD dietary management</li>
+    <li><strong>SNOMED CT</strong>: Clinical terminology for disease staging</li>
+    <li><strong>FoodOn</strong>: Food product taxonomy (structural relationships for GNN message passing)</li>
 </ol>
 
 <h2 id="schema">Schema Overview</h2>
@@ -226,95 +251,108 @@
         <th>Description</th>
     </tr>
     <tr>
-        <td><strong>Recipe</strong></td>
-        <td>1,029,720</td>
+        <td><code>nutrientkg:Recipe</code></td>
+        <td>1,029,568</td>
         <td>Recipes with ingredient lists from Recipe1M</td>
     </tr>
     <tr>
-        <td><strong>NKFRecipe</strong></td>
-        <td>20</td>
-        <td>Subclass of Recipe; clinically validated kidney-friendly recipes</td>
+        <td><code>nutrientkg:NKFRecipe</code></td>
+        <td>9</td>
+        <td>Subclass of Recipe; dietitian-verified kidney-friendly recipes from NKF</td>
     </tr>
     <tr>
-        <td><strong>Ingredient</strong></td>
-        <td>289,760</td>
+        <td><code>nutrientkg:Ingredient</code></td>
+        <td>289,760 matched</td>
         <td>Food items matched to USDA nutritional profiles</td>
     </tr>
     <tr>
-        <td><strong>SubstitutionPair</strong></td>
+        <td><code>nutrientkg:SubstitutionPair</code></td>
         <td>30,782</td>
-        <td>Validated substitution pairs with frequency counts</td>
+        <td>Reified substitution pairs with observation frequency counts</td>
     </tr>
     <tr>
-        <td><strong>USDA</strong></td>
-        <td>467,069</td>
-        <td>Nutritional data nodes storing clinical nutrients as properties</td>
+        <td><code>nutrientkg:USDA</code></td>
+        <td>289,760</td>
+        <td>Nutritional data nodes storing per-100g clinical nutrient values</td>
     </tr>
     <tr>
-        <td><strong>CKDStage</strong></td>
+        <td><code>nutrientkg:CKDStage</code></td>
         <td>6</td>
-        <td>Disease stages (1, 2, 3a, 3b, 4, 5) with KDIGO thresholds</td>
+        <td>Disease stages (1, 2, 3a, 3b, 4, 5) with KDIGO thresholds and SNOMED CT alignment</td>
     </tr>
     <tr>
-        <td><strong>RiskProfile</strong></td>
+        <td><code>nutrientkg:RiskProfile</code></td>
         <td>1,009,042</td>
-        <td>Nutrient violation annotations per ingredient per stage</td>
+        <td>Reified nutrient violation annotations per ingredient per stage</td>
     </tr>
 </table>
 
+<h3>Namespaces</h3>
+
+<ul>
+    <li>Entities: <code>http://nutrientkg.org/entity/</code> &nbsp; (prefix: <code>nutrientkg:</code>)</li>
+    <li>Properties: <code>http://nutrientkg.org/property/</code> &nbsp; (prefix: <code>nkgp:</code>)</li>
+</ul>
+
 <h3>Key Properties</h3>
 
-<p><strong>Namespaces:</strong></p>
+<p><strong>Recipe / Ingredient:</strong></p>
 <ul>
-    <li>Entities: <code>http://nutrientkg.org/entity/</code></li>
-    <li>Properties: <code>http://nutrientkg.org/property/</code> (prefix: <code>nkgp:</code>)</li>
+    <li><code>nkgp:has_ingredient</code>: Links recipes to ingredient nodes</li>
+    <li><code>nkgp:has_amount_grams</code>: Ingredient quantity per recipe occurrence</li>
 </ul>
 
-<p><strong>Recipe-Ingredient Relationships:</strong></p>
+<p><strong>Nutritional (per 100g, stored on USDA node):</strong></p>
 <ul>
-    <li><code>nkgp:has_Ingredient</code> - Links recipes to ingredients</li>
-    <li><code>nkgp:has_amount_grams</code> - Ingredient quantity</li>
+    <li><code>nkgp:has_usda_entry</code>: Ingredient → USDA node</li>
+    <li><code>nkgp:sodium_mg</code>, <code>nkgp:potassium_mg</code>, <code>nkgp:phosphorus_mg</code>, <code>nkgp:protein_g</code></li>
+    <li><code>nkgp:phosphorus_source_type</code>: animal / plant / additive / unknown</li>
+    <li><code>nkgp:fdc_description</code>: FDC description of matched food</li>
 </ul>
 
-<p><strong>Nutritional Properties:</strong></p>
+<p><strong>Match provenance (stored on ingredient node):</strong></p>
 <ul>
-    <li><code>nkgp:has_usda_entry</code> - Links ingredients to USDA nutritional data</li>
-    <li><code>nkgp:sodium_mg</code> - Sodium content (mg/100g)</li>
-    <li><code>nkgp:potassium_mg</code> - Potassium content (mg/100g)</li>
-    <li><code>nkgp:phosphorus_mg</code> - Phosphorus content (mg/100g)</li>
-    <li><code>nkgp:protein_g</code> - Protein content (g/100g)</li>
-    <li><code>nkgp:phosphorus_source_type</code> - Classification (animal/plant/additive)</li>
+    <li><code>nkgp:match_source</code>: Matching layer (alias, fdc_fuzzy, normalised, …)</li>
+    <li><code>nkgp:match_score</code>: Fuzzy similarity score (75–100)</li>
+    <li><code>nkgp:confidence_tier</code>: high / medium / low</li>
+    <li><code>nkgp:canonical_name</code>: Cleaned ingredient name for SPARQL deduplication</li>
 </ul>
 
-<p><strong>Substitution Properties:</strong></p>
+<p><strong>Substitution:</strong></p>
 <ul>
-    <li><code>nkgp:substitutes_for</code> - Direct ingredient-to-ingredient substitution link</li>
-    <li><code>nkgp:substitution_source</code> - SubstitutionPair → source ingredient</li>
-    <li><code>nkgp:substitution_target</code> - SubstitutionPair → target ingredient</li>
-    <li><code>nkgp:substitution_frequency</code> - Observation count in Recipe1M</li>
+    <li><code>nkgp:substitutes_for</code>: Direct ingredient-to-ingredient substitution link</li>
+    <li><code>nkgp:substitution_source</code>, <code>nkgp:substitution_target</code>, <code>nkgp:substitution_frequency</code>: On SubstitutionPair node</li>
+    <li><code>nkgp:safe_substitute_at_stage_X</code>: Precomputed per-stage safety flags</li>
 </ul>
 
-<p><strong>Disease Constraint Properties:</strong></p>
+<p><strong>Disease constraints:</strong></p>
 <ul>
-    <li><code>nkgp:safe_at</code> - Ingredient safe at given CKD stage</li>
-    <li><code>nkgp:restricted_at</code> - Ingredient violates constraints at given stage</li>
-    <li><code>nkgp:has_ckd_risk</code> - Links ingredient to RiskProfile violation details</li>
-    <li><code>nkgp:safeForStage</code> - NKF recipe validated for specific stages</li>
+    <li><code>nkgp:safe_at</code>: Ingredient passes all active KDIGO rules at given stage</li>
+    <li><code>nkgp:restricted_at</code>: Ingredient violates at least one rule at given stage</li>
+    <li><code>nkgp:has_ckd_risk</code>: Ingredient → RiskProfile node</li>
+    <li><code>nkgp:risk_type</code>, <code>nkgp:at_stage</code>: On RiskProfile node</li>
 </ul>
 
-<p><strong>CKD Stage Threshold Properties:</strong></p>
+<p><strong>CKD stage (stored on CKDStage node):</strong></p>
 <ul>
-    <li><code>nkgp:sodium_threshold_mg</code> - Per-meal sodium limit (mg)</li>
-    <li><code>nkgp:potassium_threshold_mg</code> - Per-meal potassium limit (mg)</li>
-    <li><code>nkgp:phosphorus_threshold_mg</code> - Per-meal phosphorus limit (mg)</li>
-    <li><code>nkgp:protein_threshold_g</code> - Per-meal protein limit (g)</li>
-    <li><code>nkgp:guideline_source</code> - Clinical guideline version (KDIGO_2024)</li>
-    <li><code>nkgp:stage_order</code> - Numeric stage ordering for progression queries</li>
+    <li><code>owl:sameAs</code>: SNOMED CT concept URI</li>
+    <li><code>nkgp:sodium_threshold_mg</code>, <code>nkgp:potassium_threshold_mg</code>, <code>nkgp:phosphorus_threshold_mg</code>, <code>nkgp:protein_threshold_g</code></li>
+    <li><code>nkgp:stage_order</code>: Integer 1–6 for progression queries</li>
+    <li><code>nkgp:guideline_source</code>: KDIGO_2024</li>
+    <li><code>nkgp:progresses_to</code>: Next stage in CKD progression chain</li>
+</ul>
+
+<p><strong>NKF recipe (per serving, stored on NKFRecipe node):</strong></p>
+<ul>
+    <li><code>nkgp:sodium_per_serving</code>, <code>nkgp:potassium_per_serving</code>, <code>nkgp:phosphorus_per_serving</code>, <code>nkgp:protein_per_serving</code></li>
+    <li><code>nkgp:safe_at</code>: CKD stages verified safe by dietitians</li>
+    <li><code>nkgp:validatedBy</code>: <code>nutrientkg:NationalKidneyFoundation</code></li>
+    <li><code>nkgp:hasDietaryLabel</code>: low-sodium, low-potassium, low-phosphorus</li>
 </ul>
 
 <h2>KDIGO 2024 Per-Meal Thresholds</h2>
 
-<p>Thresholds are derived by dividing KDIGO 2024 daily limits by three meals:</p>
+<p>Thresholds are derived by dividing KDIGO 2024 daily limits by three meals. Stored as queryable triples on each stage node.</p>
 
 <table>
     <tr>
@@ -373,90 +411,223 @@
     </tr>
 </table>
 
-<p><em>Dashes indicate nutrient not actively restricted at that stage.</em></p>
+<p><em>Dashes indicate nutrient not actively restricted at that stage. Phosphorus restrictions at Stage 3b apply to animal and additive sources only; plant phosphorus is restricted from Stage 4 due to lower bioavailability.</em></p>
 
 <h2 id="queries">Sample SPARQL Queries</h2>
 
-<h3>Q1: Substitutes by Frequency (Tier 1 - Culinary Knowledge)</h3>
+<p>Eight queries organized into three tiers by knowledge requirements. Full query files are available in the <a href="https://github.com/Nutrientkg/nutrientkg.github.io/tree/main/sparql">sparql/</a> directory. Load the graph into Blazegraph (<code>java -server -Xmx16g -jar blazegraph.jar</code>) before running.</p>
 
-<p>Retrieve validated substitutes for butter ranked by observation frequency:</p>
+<h3>Tier 1: Culinary Substitution</h3>
 
-<pre><code>PREFIX nkg: &lt;http://nutrientkg.org/entity/&gt;
-PREFIX nkgp: &lt;http://nutrientkg.org/property/&gt;
+<p>These queries exploit Recipe1MSubs validated substitution pairs and frequency data. FoodKG cannot answer any Tier 1 query.</p>
+
+<h4>Q1: Substitutes for an ingredient ranked by observation frequency</h4>
+
+<p>Returns validated substitutes for butter ranked by frequency across 70,520 Recipe1M substitution instances. Results: olive oil (547), margarine (320), coconut oil (156).</p>
+
+<pre><code>PREFIX nutrientkg: &lt;http://nutrientkg.org/entity/&gt;
+PREFIX nkgp:       &lt;http://nutrientkg.org/property/&gt;
+PREFIX rdf:        &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
 
 SELECT ?sub ?freq WHERE {
-  ?ing rdfs:label "butter"@en .
-  ?pair rdf:type nkg:SubstitutionPair ;
-        nkgp:substitution_source ?ing ;
-        nkgp:substitution_target ?sub ;
-        nkgp:substitution_frequency ?freq .
+    ?ing rdfs:label "butter"@en .
+    ?pair rdf:type                 nutrientkg:SubstitutionPair .
+    ?pair nkgp:substitution_source ?ing .
+    ?pair nkgp:substitution_target ?sub .
+    ?pair nkgp:substitution_frequency ?freq .
 }
 ORDER BY DESC(?freq)</code></pre>
 
-<p><strong>Results:</strong> olive oil (547), margarine (320), coconut oil (156)</p>
+<h4>Q2: Complete nutrient profile for all ingredients in a recipe</h4>
 
-<h3>Q2: Recipe Nutrient Profile (Tier 1)</h3>
+<p>Returns sodium, potassium, phosphorus, and protein for every ingredient in a recipe. Demonstrates NutrientKG's expanded USDA coverage across 467,069 FoodData Central entries.</p>
 
-<p>Get complete nutrient profile for all ingredients in a recipe:</p>
-
-<pre><code>PREFIX nkg: &lt;http://nutrientkg.org/entity/&gt;
-PREFIX nkgp: &lt;http://nutrientkg.org/property/&gt;
+<pre><code>PREFIX nutrientkg: &lt;http://nutrientkg.org/entity/&gt;
+PREFIX nkgp:       &lt;http://nutrientkg.org/property/&gt;
 
 SELECT ?ing ?sodium ?potassium ?phosphorus ?protein WHERE {
-  ?recipe rdfs:label "chicken stir fry"@en ;
-          nkgp:has_Ingredient ?ing .
-  ?ing nkgp:has_usda_entry ?usda .
-  ?usda nkgp:sodium_mg ?sodium ;
-        nkgp:potassium_mg ?potassium ;
-        nkgp:phosphorus_mg ?phosphorus ;
-        nkgp:protein_g ?protein .
+    ?recipe rdfs:label "chicken stir fry"@en .
+    ?recipe nkgp:has_ingredient ?ing .
+    ?ing nkgp:has_usda_entry ?usda .
+    ?usda nkgp:sodium_mg     ?sodium .
+    ?usda nkgp:potassium_mg  ?potassium .
+    ?usda nkgp:phosphorus_mg ?phosphorus .
+    ?usda nkgp:protein_g     ?protein .
 }</code></pre>
 
-<h3>Q5: Recipe Violations at Stage (Tier 2 - CKD Constraints)</h3>
+<h4>Q3: Context-specific substitutes filtered by recipe title</h4>
 
-<p>Identify ingredients violating KDIGO constraints at Stage 3b:</p>
+<p>Retrieves validated substitutes for a given ingredient that appear in recipes matching a title keyword, enabling context-aware recommendations.</p>
 
-<pre><code>PREFIX nkg: &lt;http://nutrientkg.org/entity/&gt;
-PREFIX nkgp: &lt;http://nutrientkg.org/property/&gt;
-
-SELECT ?ing ?risk_type WHERE {
-  ?recipe rdfs:label "chicken stir fry"@en ;
-          nkgp:has_Ingredient ?ing .
-  ?ing nkgp:has_ckd_risk ?risk .
-  ?risk nkgp:at_stage nkg:stage_3b ;
-        nkgp:risk_type ?risk_type .
-}</code></pre>
-
-<p><strong>Results:</strong> soy sauce (914mg sodium vs 500mg limit), chicken breast (228mg phosphorus vs 233mg), chicken broth (343mg sodium)</p>
-
-<h3>Q6: Safe Across Progression (Tier 3 - Both Knowledge Types)</h3>
-
-<p>Find substitutes safe across all stages from 3b onward:</p>
-
-<pre><code>PREFIX nkg: &lt;http://nutrientkg.org/entity/&gt;
-PREFIX nkgp: &lt;http://nutrientkg.org/property/&gt;
+<pre><code>PREFIX nutrientkg: &lt;http://nutrientkg.org/entity/&gt;
+PREFIX nkgp:       &lt;http://nutrientkg.org/property/&gt;
+PREFIX rdf:        &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+PREFIX rdfs:       &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
 
 SELECT ?sub (COUNT(?pair) AS ?freq) WHERE {
-  ?ing rdfs:label "chicken"@en .
-  ?pair rdf:type nkg:SubstitutionPair ;
-        nkgp:substitution_source ?ing ;
-        nkgp:substitution_target ?sub .
-  MINUS {
-    ?stage a nkg:CKDStage ;
-           nkgp:stage_order ?ord .
-    FILTER(?ord >= 3)
-    ?sub nkgp:has_usda_entry ?usda .
-    ?usda nkgp:sodium_mg ?sodium .
-    ?stage nkgp:sodium_threshold_mg ?lim .
-    FILTER(?sodium > ?lim)
-  }
+    ?ing rdfs:label "chicken" .
+    ?recipe nkgp:dc_title ?title .
+    FILTER(CONTAINS(LCASE(STR(?title)), "stir fry"))
+    ?recipe nkgp:has_ingredient ?ing .
+    ?pair rdf:type                    nutrientkg:SubstitutionPair .
+    ?pair nkgp:substitution_source    ?ing .
+    ?pair nkgp:substitution_target    ?sub .
+    ?pair nkgp:substitution_frequency ?freq .
+    BIND(REPLACE(REPLACE(STR(?sub),
+         "http://nutrientkg.org/entity/ingredient_",""),"_"," ")
+         AS ?sub_name)
 }
 GROUP BY ?sub
-ORDER BY DESC(?freq)</code></pre>
+ORDER BY DESC(COUNT(?pair))
+LIMIT 15</code></pre>
 
-<p><strong>Results:</strong> turkey (13), canned chicken (5)</p>
+<h3>Tier 2: CKD Constraints</h3>
 
-<h2 id="download">Download & Access</h2>
+<p>These queries require KDIGO staging constraints absent from FoodKG.</p>
+
+<h4>Q4: NKF-validated recipes safe for a specific CKD stage</h4>
+
+<p>Retrieves NKF kidney-friendly recipes safe for Stage 4, using the <code>nkgp:safe_at</code> property enriched with KDIGO stage annotations. Neither FoodKG nor the original NKF collection supports stage-specific queries.</p>
+
+<pre><code>PREFIX nutrientkg: &lt;http://nutrientkg.org/entity/&gt;
+PREFIX nkgp:       &lt;http://nutrientkg.org/property/&gt;
+PREFIX rdf:        &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+PREFIX rdfs:       &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+
+SELECT ?recipe_title ?sodium_per_serving ?potassium_per_serving
+       ?phosphorus_per_serving ?protein_per_serving ?dietary_label
+WHERE {
+    ?recipe rdf:type         nutrientkg:NKFRecipe .
+    ?recipe rdfs:label       ?recipe_title .
+    ?recipe nkgp:safe_at     ?stage .
+    ?stage  nkgp:stage_order ?ord .
+    FILTER(xsd:decimal(?ord) = 5)
+    ?recipe nkgp:sodium_per_serving     ?sodium_per_serving .
+    ?recipe nkgp:potassium_per_serving  ?potassium_per_serving .
+    ?recipe nkgp:phosphorus_per_serving ?phosphorus_per_serving .
+    ?recipe nkgp:protein_per_serving    ?protein_per_serving .
+    OPTIONAL { ?recipe nkgp:hasDietaryLabel ?dietary_label }
+}
+ORDER BY ?phosphorus_per_serving</code></pre>
+
+<h4>Q5: Violating ingredients in a recipe at a given stage</h4>
+
+<p>Identifies violating ingredients via RiskProfile nodes encoding specific violation types. For chicken stir-fry at Stage 3b returns soy sauce (914 mg sodium vs 500 mg limit), chicken breast (228 mg phosphorus vs 233 mg limit), and chicken broth (343 mg sodium).</p>
+
+<pre><code>PREFIX nutrientkg: &lt;http://nutrientkg.org/entity/&gt;
+PREFIX nkgp:       &lt;http://nutrientkg.org/property/&gt;
+
+SELECT ?ing ?risk_type WHERE {
+    ?recipe rdfs:label "chicken stir fry"@en .
+    ?recipe nkgp:has_ingredient ?ing .
+    ?ing nkgp:has_ckd_risk ?risk .
+    ?risk nkgp:at_stage   nutrientkg:stage_3b .
+    ?risk nkgp:risk_type  ?risk_type .
+}</code></pre>
+
+<h3>Tier 3: Progression-Aware</h3>
+
+<p>These queries require both Recipe1MSubs and KDIGO multi-stage constraints simultaneously. FoodKG cannot answer any Tier 3 query.</p>
+
+<h4>Q6: Safe substitutes across disease progression from Stage 3b onward</h4>
+
+<p>Uses a MINUS clause to exclude substitutes violating constraints at any stage with <code>stage_order >= 4</code> (Stage 3b onward). Accesses thresholds directly from CKDStage nodes. Returns turkey (frequency 13) and canned chicken (frequency 5).</p>
+
+<pre><code>PREFIX nutrientkg: &lt;http://nutrientkg.org/entity/&gt;
+PREFIX nkgp:       &lt;http://nutrientkg.org/property/&gt;
+PREFIX rdf:        &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+PREFIX rdfs:       &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+
+SELECT ?sub (COUNT(?pair) AS ?freq) WHERE {
+    ?ing rdfs:label "chicken"@en .
+    ?pair rdf:type                 nutrientkg:SubstitutionPair .
+    ?pair nkgp:substitution_source ?ing .
+    ?pair nkgp:substitution_target ?sub .
+    MINUS {
+        ?stage a              nutrientkg:CKDStage .
+        ?stage nkgp:stage_order           ?ord .
+        FILTER(xsd:decimal(?ord) >= 4)
+        ?sub   nkgp:has_usda_entry        ?usda .
+        ?usda  nkgp:sodium_mg             ?sodium .
+        ?stage nkgp:sodium_threshold_mg   ?lim .
+        FILTER(xsd:decimal(?sodium) > xsd:decimal(?lim))
+    }
+}
+GROUP BY ?sub
+ORDER BY DESC(COUNT(?pair))</code></pre>
+
+<h4>Q7: Substitutes safe at Stage 3b but restricted at Stage 4</h4>
+
+<p>Selects ingredients with both <code>safe_at stage_3b</code> and <code>restricted_at stage_4</code> edges, revealing foods patients must eliminate as disease progresses. Returns squash (frequency 8) which is safe at Stage 3b but violates potassium limits at Stage 4.</p>
+
+<pre><code>PREFIX nutrientkg: &lt;http://nutrientkg.org/entity/&gt;
+PREFIX nkgp:       &lt;http://nutrientkg.org/property/&gt;
+
+SELECT ?substitute_name ?frequency ?safe_at_4 ?safe_at_5
+WHERE {
+    nutrientkg:ingredient_chicken nkgp:safe_substitute_at_stage_3b ?target .
+    ?subNode nkgp:substitution_source    nutrientkg:ingredient_chicken .
+    ?subNode nkgp:substitution_target    ?target .
+    ?subNode nkgp:substitution_frequency ?frequency .
+    MINUS {
+        nutrientkg:ingredient_chicken nkgp:safe_substitute_at_stage_4 ?target .
+        nutrientkg:ingredient_chicken nkgp:safe_substitute_at_stage_5 ?target .
+    }
+    BIND(IF(EXISTS {
+        nutrientkg:ingredient_chicken nkgp:safe_substitute_at_stage_4 ?target
+    }, "safe", "UNSAFE") AS ?safe_at_4)
+    BIND(IF(EXISTS {
+        nutrientkg:ingredient_chicken nkgp:safe_substitute_at_stage_5 ?target
+    }, "safe", "UNSAFE") AS ?safe_at_5)
+    BIND(REPLACE(REPLACE(STR(?target),
+         "http://nutrientkg.org/entity/ingredient_",""),"_"," ")
+         AS ?substitute_name)
+}
+ORDER BY DESC(xsd:decimal(?frequency))
+LIMIT 10</code></pre>
+
+<h4>Q8: Cumulative nutrient burden for ingredient combinations</h4>
+
+<p>Sums nutrient values across two ingredients using SPARQL <code>BIND</code> and filters combinations where totals satisfy Stage 3b thresholds. For chicken and cheese at Stage 3b returns four valid combinations, demonstrating meal planning support that accounts for cumulative nutrient loads rather than evaluating ingredients in isolation.</p>
+
+<pre><code>PREFIX nutrientkg: &lt;http://nutrientkg.org/entity/&gt;
+PREFIX nkgp:       &lt;http://nutrientkg.org/property/&gt;
+PREFIX xsd:        &lt;http://www.w3.org/2001/XMLSchema#&gt;
+
+SELECT ?ing1_name ?ing2_name ?total_sodium ?total_phosphorus ?total_potassium
+WHERE {
+    VALUES ?ing1 { nutrientkg:ingredient_chicken }
+    VALUES ?ing2 {
+        nutrientkg:ingredient_parmesan_cheese
+        nutrientkg:ingredient_mozzarella_cheese
+        nutrientkg:ingredient_cheddar_cheese
+        nutrientkg:ingredient_cream_cheese
+    }
+    ?ing1 nkgp:has_usda_entry ?usda1 .
+    ?usda1 nkgp:sodium_mg     ?na1 .
+    ?usda1 nkgp:phosphorus_mg ?p1 .
+    ?usda1 nkgp:potassium_mg  ?k1 .
+    ?ing2 nkgp:has_usda_entry ?usda2 .
+    ?usda2 nkgp:sodium_mg     ?na2 .
+    ?usda2 nkgp:phosphorus_mg ?p2 .
+    ?usda2 nkgp:potassium_mg  ?k2 .
+    nutrientkg:stage_3b nkgp:sodium_threshold_mg     ?na_lim .
+    nutrientkg:stage_3b nkgp:phosphorus_threshold_mg ?p_lim .
+    nutrientkg:stage_3b nkgp:potassium_threshold_mg  ?k_lim .
+    BIND(xsd:decimal(?na1) + xsd:decimal(?na2) AS ?total_sodium)
+    BIND(xsd:decimal(?p1)  + xsd:decimal(?p2)  AS ?total_phosphorus)
+    BIND(xsd:decimal(?k1)  + xsd:decimal(?k2)  AS ?total_potassium)
+    FILTER(?total_sodium     &lt;= xsd:decimal(?na_lim))
+    FILTER(?total_phosphorus &lt;= xsd:decimal(?p_lim))
+    FILTER(?total_potassium  &lt;= xsd:decimal(?k_lim))
+    BIND(REPLACE(REPLACE(STR(?ing1),
+         "http://nutrientkg.org/entity/ingredient_",""),"_"," ") AS ?ing1_name)
+    BIND(REPLACE(REPLACE(STR(?ing2),
+         "http://nutrientkg.org/entity/ingredient_",""),"_"," ") AS ?ing2_name)
+}
+ORDER BY ?total_sodium</code></pre>
+
+<h2 id="download">Download &amp; Access</h2>
 
 <div class="warning-box">
     <strong>Note:</strong> Download links and SPARQL endpoint will be activated upon paper acceptance.
@@ -467,60 +638,85 @@ ORDER BY DESC(?freq)</code></pre>
 <ul>
     <li><strong>RDF Dump:</strong> Full knowledge graph in Turtle, RDF/XML, N-Triples, and JSON-LD formats</li>
     <li><strong>SPARQL Endpoint:</strong> Public queryable endpoint supporting SPARQL 1.1</li>
-    <li><strong>GitHub Repository:</strong> https://github.com/nutrientkg/nutrientkg</li>
+    <li><strong>GitHub Repository:</strong> <a href="https://github.com/Nutrientkg/nutrientkg.github.io">https://github.com/Nutrientkg/nutrientkg.github.io</a></li>
     <li><strong>Documentation:</strong> Full technical documentation and examples</li>
     <li><strong>DOI:</strong> Permanent identifier via Zenodo</li>
 </ul>
 
 <h3>SNOMED CT Integration</h3>
 
-<p>CKD stage concepts are linked via <code>owl:sameAs</code> to SNOMED CT clinical terminology:</p>
-
-<ul>
-    <li>Stage 1: <code>http://snomed.info/id/431855005</code></li>
-    <li>Stage 2: <code>http://snomed.info/id/431856006</code></li>
-    <li>Stage 3a: <code>http://snomed.info/id/700378005</code></li>
-    <li>Stage 3b: <code>http://snomed.info/id/700379002</code></li>
-    <li>Stage 4: <code>http://snomed.info/id/431857002</code></li>
-    <li>Stage 5: <code>http://snomed.info/id/433146000</code></li>
-</ul>
-
-<h2 id="citation">Citation</h2>
-
-<p>If you use NutrientKG in your research, please cite:</p>
-
-<pre><code>@inproceedings{nutrientkg2026,
-  title={NutrientKG: A Food-Health Knowledge Graph for 
-         Disease-Aware Recipe Adaptation},
-  author={[Authors - to be added]},
-  booktitle={Proceedings of the 25th International Semantic 
-             Web Conference (ISWC 2026)},
-  year={2026},
-  note={Resource Track}
-}</code></pre>
-
-<h2>Comparison with Existing Resources</h2>
+<p>CKD stage nodes are linked to SNOMED CT clinical concepts via <code>owl:sameAs</code>. Clinical systems can use SNOMED URIs directly as entry points to NutrientKG dietary rules:</p>
 
 <table>
     <tr>
-        <th>Feature</th>
+        <th>Stage node</th>
+        <th>SNOMED CT URI</th>
+        <th>Concept</th>
+    </tr>
+    <tr>
+        <td><code>nutrientkg:stage_1</code></td>
+        <td><code>http://snomed.info/id/431855005</code></td>
+        <td>Chronic kidney disease stage 1</td>
+    </tr>
+    <tr>
+        <td><code>nutrientkg:stage_2</code></td>
+        <td><code>http://snomed.info/id/431856006</code></td>
+        <td>Chronic kidney disease stage 2</td>
+    </tr>
+    <tr>
+        <td><code>nutrientkg:stage_3a</code></td>
+        <td><code>http://snomed.info/id/700378005</code></td>
+        <td>Chronic kidney disease stage 3A</td>
+    </tr>
+    <tr>
+        <td><code>nutrientkg:stage_3b</code></td>
+        <td><code>http://snomed.info/id/700379002</code></td>
+        <td>Chronic kidney disease stage 3B</td>
+    </tr>
+    <tr>
+        <td><code>nutrientkg:stage_4</code></td>
+        <td><code>http://snomed.info/id/431857002</code></td>
+        <td>Chronic kidney disease stage 4</td>
+    </tr>
+    <tr>
+        <td><code>nutrientkg:stage_5</code></td>
+        <td><code>http://snomed.info/id/433146000</code></td>
+        <td>Chronic kidney disease stage 5</td>
+    </tr>
+</table>
+
+<h2>Comparison with FoodKG</h2>
+
+<table>
+    <tr>
+        <th>Metric</th>
         <th>NutrientKG</th>
         <th>FoodKG</th>
     </tr>
     <tr>
+        <td>Total triples</td>
+        <td>28,047,658</td>
+        <td>67,022,865</td>
+    </tr>
+    <tr>
         <td>Recipes</td>
+        <td>1,029,568</td>
         <td>1,029,720</td>
-        <td>69,223</td>
     </tr>
     <tr>
-        <td>USDA-linked ingredients</td>
-        <td>289,760</td>
-        <td>2,723</td>
+        <td>Unique ingredient strings</td>
+        <td>675,940 (original)</td>
+        <td>18,253 (normalised)</td>
     </tr>
     <tr>
-        <td>USDA entries</td>
-        <td>467,069 (FDC)</td>
-        <td>7,793 (SR Legacy)</td>
+        <td>Ingredients linked to USDA</td>
+        <td>289,760 (42.9%)</td>
+        <td>16,203 (89% of normalised vocab)</td>
+    </tr>
+    <tr>
+        <td>USDA database</td>
+        <td>FDC (467,069 entries)</td>
+        <td>SR Legacy (7,793 entries)</td>
     </tr>
     <tr>
         <td>Validated substitution pairs</td>
@@ -528,65 +724,69 @@ ORDER BY DESC(?freq)</code></pre>
         <td>—</td>
     </tr>
     <tr>
-        <td>Disease staging constraints</td>
-        <td>✓ (CKD)</td>
+        <td>CKD stage annotations</td>
+        <td>✓ (KDIGO 2024, 6 stages)</td>
         <td>✗</td>
     </tr>
     <tr>
-        <td>Progression-aware queries</td>
+        <td>Bioavailability-typed phosphorus</td>
+        <td>✓ (animal / plant / additive)</td>
+        <td>✗</td>
+    </tr>
+    <tr>
+        <td>Safe substitution edges</td>
+        <td>116,786</td>
+        <td>—</td>
+    </tr>
+    <tr>
+        <td>Clinical risk profile nodes</td>
+        <td>1,009,042</td>
+        <td>—</td>
+    </tr>
+    <tr>
+        <td>SNOMED CT alignment</td>
         <td>✓</td>
         <td>✗</td>
     </tr>
 </table>
 
+<h2 id="citation">Citation</h2>
+
+<p>If you use NutrientKG in your research, please cite:</p>
+
+<pre><code>@inproceedings{nutrientkg2026,
+  title     = {NutrientKG: A Food-Health Knowledge Graph for
+               Disease-Aware Recipe Adaptation},
+  author    = {Koul, Vedantt and Yakubu, Mulikatu and Olukotun, Olatayo and Anyanwu, Kemafor},
+  booktitle = {Proceedings of the International Semantic Web Conference},
+  year      = {2026}
+}</code></pre>
+
 <h2>License</h2>
 
-<p>NutrientKG is released under <strong>Creative Commons Attribution 4.0 International (CC-BY 4.0)</strong>.</p>
-
-<p>You are free to:</p>
-<ul>
-    <li><strong>Share</strong> — copy and redistribute the material</li>
-    <li><strong>Adapt</strong> — remix, transform, and build upon the material</li>
-</ul>
-
-<p>Under the following terms:</p>
-<ul>
-    <li><strong>Attribution</strong> — You must give appropriate credit and indicate if changes were made</li>
-</ul>
+<p>NutrientKG is released under <strong>Creative Commons Attribution 4.0 International (CC-BY 4.0)</strong>. You are free to share and adapt the material for any purpose, provided appropriate credit is given.</p>
 
 <p>Full license: <a href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></p>
 
 <h2>Contact</h2>
 
 <p><strong>Principal Investigator:</strong> Kemafor Anyanwu, NC State University</p>
-
-<p>For questions, bug reports, or collaboration inquiries:</p>
 <ul>
-    <li><strong>GitHub Issues:</strong> https://github.com/nutrientkg/nutrientkg/issues</li>
+    <li><strong>GitHub Issues:</strong> <a href="https://github.com/Nutrientkg/nutrientkg.github.io/issues">https://github.com/Nutrientkg/nutrientkg.github.io/issues</a></li>
     <li><strong>Email:</strong> kogan@ncsu.edu</li>
 </ul>
 
 <h2>Acknowledgments</h2>
 
-<p>Data sources:</p>
-<ul>
-    <li>USDA FoodData Central</li>
-    <li>Recipe1M dataset (Marin et al.)</li>
-    <li>Recipe1MSubs dataset (Fatemi et al.)</li>
-    <li>National Kidney Foundation</li>
-    <li>KDIGO Clinical Practice Guidelines</li>
-    <li>SNOMED CT (IHTSDO)</li>
-    <li>FoodOn ontology</li>
-</ul>
+<p>USDA FoodData Central · Recipe1M (Marin et al.) · Recipe1MSubs (Fatemi et al.) · National Kidney Foundation · KDIGO Clinical Practice Guidelines · SNOMED CT (IHTSDO) · FoodOn ontology</p>
 
 <hr>
 
 <p style="text-align: center; color: #7f8c8d; margin-top: 40px;">
-    <strong>NutrientKG</strong> — Data Intelligence Lab, North Carolina State University<br>
+    <strong>NutrientKG</strong> | Data Intelligence Lab, North Carolina State University<br>
     Last Updated: May 2026 | Version 1.0
 </p>
 
 </div>
-
 </body>
 </html>
