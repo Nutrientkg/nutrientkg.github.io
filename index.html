@@ -425,48 +425,52 @@
 
 <p>Returns validated substitutes for butter ranked by frequency across 70,520 Recipe1M substitution instances. Results: olive oil (547), margarine (320), coconut oil (156).</p>
 
-<pre><code>PREFIX nutrientkg: &lt;http://nutrientkg.org/entity/&gt;
-PREFIX nkgp:       &lt;http://nutrientkg.org/property/&gt;
-PREFIX rdf:        &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+<pre><code>PREFIX nutrientkg: <http://nutrientkg.org/entity/>
+PREFIX nkgp:       <http://nutrientkg.org/property/>
+PREFIX rdf:        <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 
 SELECT ?sub ?freq WHERE {
-    ?ing rdfs:label "butter"@en .
-    ?pair rdf:type                 nutrientkg:SubstitutionPair .
-    ?pair nkgp:substitution_source ?ing .
-    ?pair nkgp:substitution_target ?sub .
-    ?pair nkgp:substitution_frequency ?freq .
+  ?pair rdf:type                    nutrientkg:SubstitutionPair .
+  ?pair nkgp:substitution_source    nutrientkg:ingredient_butter .
+  ?pair nkgp:substitution_target    ?sub .
+  ?pair nkgp:substitution_frequency ?freq .
 }
-ORDER BY DESC(?freq)</code></pre>
+ORDER BY DESC(?freq)
+LIMIT 15</code></pre>
 
 <h4>Q2: Complete nutrient profile for all ingredients in a recipe</h4>
 
 <p>Returns sodium, potassium, phosphorus, and protein for every ingredient in a recipe. Demonstrates NutrientKG's expanded USDA coverage across 467,069 FoodData Central entries.</p>
 
-<pre><code>PREFIX nutrientkg: &lt;http://nutrientkg.org/entity/&gt;
-PREFIX nkgp:       &lt;http://nutrientkg.org/property/&gt;
+<pre><code>PREFIX nutrientkg: <http://nutrientkg.org/entity/>
+PREFIX nkgp:       <http://nutrientkg.org/property/>
+PREFIX dc:         <http://purl.org/dc/elements/1.1/>
 
 SELECT ?ing ?sodium ?potassium ?phosphorus ?protein WHERE {
-    ?recipe rdfs:label "chicken stir fry"@en .
+    ?recipe dc:title ?title .
+    FILTER(CONTAINS(LCASE(STR(?title)), "chicken stir fry"))
     ?recipe nkgp:has_ingredient ?ing .
     ?ing nkgp:has_usda_entry ?usda .
     ?usda nkgp:sodium_mg     ?sodium .
     ?usda nkgp:potassium_mg  ?potassium .
     ?usda nkgp:phosphorus_mg ?phosphorus .
     ?usda nkgp:protein_g     ?protein .
+} LIMIT 20
 }</code></pre>
 
 <h4>Q3: Context-specific substitutes filtered by recipe title</h4>
 
 <p>Retrieves validated substitutes for a given ingredient that appear in recipes matching a title keyword, enabling context-aware recommendations.</p>
 
-<pre><code>PREFIX nutrientkg: &lt;http://nutrientkg.org/entity/&gt;
-PREFIX nkgp:       &lt;http://nutrientkg.org/property/&gt;
-PREFIX rdf:        &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
-PREFIX rdfs:       &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+<pre><code>PREFIX nutrientkg: <http://nutrientkg.org/entity/>
+PREFIX nkgp:       <http://nutrientkg.org/property/>
+PREFIX rdf:        <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX dc:         <http://purl.org/dc/elements/1.1/>
 
-SELECT ?sub (COUNT(?pair) AS ?freq) WHERE {
-    ?ing rdfs:label "chicken" .
-    ?recipe nkgp:dc_title ?title .
+SELECT ?sub_name (SUM(xsd:integer(?freq)) AS ?total_freq) WHERE {
+    ?ing nkgp:canonical_name ?name .
+    FILTER(LCASE(REPLACE(STR(?name), "_", " ")) = "chicken")
+    ?recipe dc:title ?title .
     FILTER(CONTAINS(LCASE(STR(?title)), "stir fry"))
     ?recipe nkgp:has_ingredient ?ing .
     ?pair rdf:type                    nutrientkg:SubstitutionPair .
@@ -477,8 +481,8 @@ SELECT ?sub (COUNT(?pair) AS ?freq) WHERE {
          "http://nutrientkg.org/entity/ingredient_",""),"_"," ")
          AS ?sub_name)
 }
-GROUP BY ?sub
-ORDER BY DESC(COUNT(?pair))
+GROUP BY ?sub ?sub_name
+ORDER BY DESC(SUM(xsd:integer(?freq)))
 LIMIT 15</code></pre>
 
 <h3>Tier 2: CKD Constraints</h3>
@@ -630,7 +634,7 @@ ORDER BY ?total_sodium</code></pre>
 <h2 id="download">Download &amp; Access</h2>
 
 <div class="warning-box">
-    <strong>Note:</strong> Download links and SPARQL endpoint will be activated upon paper acceptance.
+    <strong>SparQL</strong> https://nutrientkg.mooo.com/
 </div>
 
 <h3>Planned Resources</h3>
