@@ -493,10 +493,10 @@ LIMIT 15</code></pre>
 
 <p>Retrieves NKF kidney-friendly recipes safe for Stage 4, using the <code>nkgp:safe_at</code> property enriched with KDIGO stage annotations. Neither FoodKG nor the original NKF collection supports stage-specific queries.</p>
 
-<pre><code>PREFIX nutrientkg: &lt;http://nutrientkg.org/entity/&gt;
-PREFIX nkgp:       &lt;http://nutrientkg.org/property/&gt;
-PREFIX rdf:        &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
-PREFIX rdfs:       &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+<pre><code>PREFIX nutrientkg: <http://nutrientkg.org/entity/>
+PREFIX nkgp:       <http://nutrientkg.org/property/>
+PREFIX rdf:        <http://www.w3.org/1999/02/22-rdf-syntax-ns/>
+PREFIX rdfs:       <http://www.w3.org/2000/01/rdf-schema#/>
 
 SELECT ?recipe_title ?sodium_per_serving ?potassium_per_serving
        ?phosphorus_per_serving ?protein_per_serving ?dietary_label
@@ -518,8 +518,8 @@ ORDER BY ?phosphorus_per_serving</code></pre>
 
 <p>Identifies violating ingredients via RiskProfile nodes encoding specific violation types. For chicken stir-fry at Stage 3b returns soy sauce (914 mg sodium vs 500 mg limit), chicken breast (228 mg phosphorus vs 233 mg limit), and chicken broth (343 mg sodium).</p>
 
-<pre><code>PREFIX nutrientkg: &lt;http://nutrientkg.org/entity/&gt;
-PREFIX nkgp:       &lt;http://nutrientkg.org/property/&gt;
+<pre><code>PREFIX nutrientkg: <http://nutrientkg.org/entity/>;
+PREFIX nkgp:       <http://nutrientkg.org/property/>;
 
 SELECT ?ing ?risk_type WHERE {
     ?recipe rdfs:label "chicken stir fry"@en .
@@ -549,8 +549,8 @@ SELECT ?sub ?sub_name (COUNT(?pair) AS ?freq) WHERE {
     ?pair nkgp:substitution_source ?ing .
     ?pair nkgp:substitution_target ?sub .
     MINUS {
-        ?sub nkgp:has_usda_entry       ?usda .
-        ?usda nkgp:sodium_mg           ?sodium .
+        ?sub nkgp:has_usda_entry      ?usda .
+        ?usda nkgp:sodium_mg          ?sodium .
         FILTER(xsd:decimal(?sodium) > 333)
     }
     BIND(REPLACE(REPLACE(STR(?sub),
@@ -559,11 +559,7 @@ SELECT ?sub ?sub_name (COUNT(?pair) AS ?freq) WHERE {
 }
 GROUP BY ?sub ?sub_name
 ORDER BY DESC(COUNT(?pair))
-LIMIT 15
-    }
-}
-GROUP BY ?sub
-ORDER BY DESC(COUNT(?pair))</code></pre>
+LIMIT 15</code></pre>
 
 <h4>Q7: Substitutes safe at Stage 3b but restricted at Stage 4</h4>
 
