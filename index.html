@@ -425,9 +425,9 @@
 
 <p>Returns validated substitutes for butter ranked by frequency across 70,520 Recipe1M substitution instances. Results: olive oil (547), margarine (320), coconut oil (156).</p>
 
-<pre><code>PREFIX nutrientkg: <http://nutrientkg.org/entity/>
-PREFIX nkgp:       <http://nutrientkg.org/property/>
-PREFIX rdf:        <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+<pre><code>PREFIX nutrientkg: &lt;http://nutrientkg.org/entity/&gt;
+PREFIX nkgp:       &lt;http://nutrientkg.org/property/&gt;
+PREFIX rdf:        &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
 
 SELECT ?sub ?freq WHERE {
   ?pair rdf:type                    nutrientkg:SubstitutionPair .
@@ -442,9 +442,9 @@ LIMIT 15</code></pre>
 
 <p>Returns sodium, potassium, phosphorus, and protein for every ingredient in a recipe. Demonstrates NutrientKG's expanded USDA coverage across 467,069 FoodData Central entries.</p>
 
-<pre><code>PREFIX nutrientkg: <http://nutrientkg.org/entity/>
-PREFIX nkgp:       <http://nutrientkg.org/property/>
-PREFIX dc:         <http://purl.org/dc/elements/1.1/>
+<pre><code>PREFIX nutrientkg: &lt;http://nutrientkg.org/entity/&gt;
+PREFIX nkgp:       &lt;http://nutrientkg.org/property/&gt;
+PREFIX dc:         &lt;http://purl.org/dc/elements/1.1/&gt;
 
 SELECT ?ing ?sodium ?potassium ?phosphorus ?protein WHERE {
     ?recipe dc:title ?title .
@@ -462,10 +462,10 @@ SELECT ?ing ?sodium ?potassium ?phosphorus ?protein WHERE {
 
 <p>Retrieves validated substitutes for a given ingredient that appear in recipes matching a title keyword, enabling context-aware recommendations.</p>
 
-<pre><code>PREFIX nutrientkg: <http://nutrientkg.org/entity/>
-PREFIX nkgp:       <http://nutrientkg.org/property/>
-PREFIX rdf:        <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX dc:         <http://purl.org/dc/elements/1.1/>
+<pre><code>PREFIX nutrientkg: &lt;http://nutrientkg.org/entity/&gt;
+PREFIX nkgp:       &lt;http://nutrientkg.org/property/&gt;
+PREFIX rdf:        &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+PREFIX dc:         &lt;http://purl.org/dc/elements/1.1/&gt;
 
 SELECT ?sub_name (SUM(xsd:integer(?freq)) AS ?total_freq) WHERE {
     ?ing nkgp:canonical_name ?name .
@@ -493,10 +493,10 @@ LIMIT 15</code></pre>
 
 <p>Retrieves NKF kidney-friendly recipes safe for Stage 4, using the <code>nkgp:safe_at</code> property enriched with KDIGO stage annotations. Neither FoodKG nor the original NKF collection supports stage-specific queries.</p>
 
-<pre><code>PREFIX nutrientkg: <http://nutrientkg.org/entity/>
-PREFIX nkgp:       <http://nutrientkg.org/property/>
-PREFIX rdf:        <http://www.w3.org/1999/02/22-rdf-syntax-ns/>
-PREFIX rdfs:       <http://www.w3.org/2000/01/rdf-schema#/>
+<pre><code>PREFIX nutrientkg: <&lt;http://nutrientkg.org/entity/&gt;
+PREFIX nkgp:       &lt;http://nutrientkg.org/property/&gt;
+PREFIX rdf:        &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns/&gt;
+PREFIX rdfs:       &lt;http://www.w3.org/2000/01/rdf-schema#/&gt;
 
 SELECT ?recipe_title ?sodium_per_serving ?potassium_per_serving
        ?phosphorus_per_serving ?protein_per_serving ?dietary_label
@@ -518,8 +518,8 @@ ORDER BY ?phosphorus_per_serving</code></pre>
 
 <p>Identifies violating ingredients via RiskProfile nodes encoding specific violation types. For chicken stir-fry at Stage 3b returns soy sauce (914 mg sodium vs 500 mg limit), chicken breast (228 mg phosphorus vs 233 mg limit), and chicken broth (343 mg sodium).</p>
 
-<pre><code>PREFIX nutrientkg: <http://nutrientkg.org/entity/>;
-PREFIX nkgp:       <http://nutrientkg.org/property/>;
+<pre><code>PREFIX nutrientkg: &lt;http://nutrientkg.org/entity/&gt;
+PREFIX nkgp:       &lt;http://nutrientkg.org/property/&gt;
 
 SELECT ?ing ?risk_type WHERE {
     ?recipe rdfs:label "chicken stir fry"@en .
@@ -537,10 +537,10 @@ SELECT ?ing ?risk_type WHERE {
 
 <p>Uses a MINUS clause to exclude substitutes violating constraints at any stage with <code>stage_order >= 4</code> (Stage 3b onward). Accesses thresholds directly from CKDStage nodes. Returns turkey (frequency 13) and canned chicken (frequency 5).</p>
 
-<pre><code>PREFIX nutrientkg: <http://nutrientkg.org/entity/>
-PREFIX nkgp:       <http://nutrientkg.org/property/>
-PREFIX rdf:        <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX xsd:        <http://www.w3.org/2001/XMLSchema#>
+<pre><code>PREFIX nutrientkg: &lt;http://nutrientkg.org/entity/&gt;
+PREFIX nkgp:       &lt;http://nutrientkg.org/property/&gt;
+PREFIX rdf:        &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+PREFIX xsd:        &lt;http://www.w3.org/2001/XMLSchema#&gt;
 
 SELECT ?sub ?sub_name (COUNT(?pair) AS ?freq) WHERE {
     ?ing nkgp:canonical_name ?name .
@@ -565,9 +565,9 @@ LIMIT 15</code></pre>
 
 <p>Selects ingredients with both <code>safe_at stage_3b</code> and <code>restricted_at stage_4</code> edges, revealing foods patients must eliminate as disease progresses. Returns squash (frequency 8) which is safe at Stage 3b but violates potassium limits at Stage 4.</p>
 
-<pre><code>PREFIX nutrientkg: <http://nutrientkg.org/entity/>
-PREFIX nkgp:       <http://nutrientkg.org/property/>
-PREFIX xsd:        <http://www.w3.org/2001/XMLSchema#>
+<pre><code>PREFIX nutrientkg: &lt;http://nutrientkg.org/entity/&gt;
+PREFIX nkgp:       &lt;http://nutrientkg.org/property/&gt;
+PREFIX xsd:        &lt;http://www.w3.org/2001/XMLSchema#&gt;
 
 SELECT ?substitute_name ?frequency ?safe_at_4 ?safe_at_5
 WHERE {
@@ -597,9 +597,9 @@ LIMIT 10</code></pre>
 
 <p>Sums nutrient values across two ingredients using SPARQL <code>BIND</code> and filters combinations where totals satisfy Stage 3b thresholds. For chicken and cheese at Stage 3b returns four valid combinations, demonstrating meal planning support that accounts for cumulative nutrient loads rather than evaluating ingredients in isolation.</p>
 
-<pre><code>PREFIX nutrientkg: <http://nutrientkg.org/entity/>
-PREFIX nkgp:       <http://nutrientkg.org/property/>
-PREFIX xsd:        <http://www.w3.org/2001/XMLSchema#>
+<pre><code>PREFIX nutrientkg: &lt;http://nutrientkg.org/entity/&gt;
+PREFIX nkgp:       &lt;http://nutrientkg.org/property/&gt;
+PREFIX xsd:        &lt;http://www.w3.org/2001/XMLSchema#&gt;
 
 SELECT ?ing1_name ?ing2_name ?total_sodium ?total_phosphorus ?total_potassium
 WHERE {
