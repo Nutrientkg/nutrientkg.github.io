@@ -457,7 +457,7 @@ SELECT ?ing ?sodium ?potassium ?phosphorus ?protein WHERE {
     ?usda nkgp:phosphorus_mg ?phosphorus .
     ?usda nkgp:protein_g     ?protein .
 } LIMIT 20
-}</code></pre>
+</code></pre>
 
 <h4>Q3: Context-specific substitutes filtered by recipe title</h4>
 
@@ -494,26 +494,24 @@ LIMIT 15</code></pre>
 
 <p>Retrieves NKF kidney-friendly recipes safe for Stage 4, using the <code>nkgp:safe_at</code> property enriched with KDIGO stage annotations. Neither FoodKG nor the original NKF collection supports stage-specific queries.</p>
 
-<pre><code>PREFIX nutrientkg: <&lt;http://nutrientkg.org/entity/&gt;
+<pre><code>PREFIX nutrientkg: &lt;http://nutrientkg.org/entity/&gt;
 PREFIX nkgp:       &lt;http://nutrientkg.org/property/&gt;
-PREFIX rdf:        &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns/&gt;
-PREFIX rdfs:       &lt;http://www.w3.org/2000/01/rdf-schema#/&gt;
+PREFIX rdf:        &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+PREFIX rdfs:       &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
 
 SELECT ?recipe_title ?sodium_per_serving ?potassium_per_serving
        ?phosphorus_per_serving ?protein_per_serving ?dietary_label
 WHERE {
-    ?recipe rdf:type         nutrientkg:NKFRecipe .
-    ?recipe rdfs:label       ?recipe_title .
-    ?recipe nkgp:safe_at     ?stage .
-    ?stage  nkgp:stage_order ?ord .
-    FILTER(xsd:decimal(?ord) = 5)
+    ?recipe rdf:type                    nutrientkg:NKFRecipe .
+    ?recipe rdfs:label                  ?recipe_title .
+    ?recipe nkgp:safe_at                nutrientkg:stage_5 .
     ?recipe nkgp:sodium_per_serving     ?sodium_per_serving .
     ?recipe nkgp:potassium_per_serving  ?potassium_per_serving .
     ?recipe nkgp:phosphorus_per_serving ?phosphorus_per_serving .
     ?recipe nkgp:protein_per_serving    ?protein_per_serving .
     OPTIONAL { ?recipe nkgp:hasDietaryLabel ?dietary_label }
 }
-ORDER BY ?phosphorus_per_serving</code></pre>
+ORDER BY ?phosphorus_per_serving
 
 <h4>Q5: Violating ingredients in a recipe at a given stage</h4>
 
@@ -521,14 +519,18 @@ ORDER BY ?phosphorus_per_serving</code></pre>
 
 <pre><code>PREFIX nutrientkg: &lt;http://nutrientkg.org/entity/&gt;
 PREFIX nkgp:       &lt;http://nutrientkg.org/property/&gt;
+PREFIX dc:         &lt;http://purl.org/dc/elements/1.1/&gt;
 
 SELECT ?ing ?risk_type WHERE {
-    ?recipe rdfs:label "chicken stir fry"@en .
+    ?recipe dc:title ?title .
+    FILTER(CONTAINS(LCASE(STR(?title)), "chicken stir fry"))
     ?recipe nkgp:has_ingredient ?ing .
     ?ing nkgp:has_ckd_risk ?risk .
-    ?risk nkgp:at_stage   nutrientkg:stage_3b .
-    ?risk nkgp:risk_type  ?risk_type .
-}</code></pre>
+    ?risk nkgp:at_stage  "stage_3b" .
+    ?risk nkgp:risk_type ?risk_type .
+}
+LIMIT 20
+</code></pre>
 
 <h3>Tier 3: Progression-Aware</h3>
 
@@ -596,7 +598,7 @@ LIMIT 10</code></pre>
 
 <h4>Q8: Cumulative nutrient burden for ingredient combinations</h4>
 
-<p>Sums nutrient values across two ingredients using SPARQL <code>BIND</code> and filters combinations where totals satisfy Stage 3b thresholds. For chicken and cheese at Stage 3b returns four valid combinations, demonstrating meal planning support that accounts for cumulative nutrient loads rather than evaluating ingredients in isolation.</p>
+<p>Sums nutrient values across two ingredients using SPARQL <code>BIND</code> and filters combinations where totals satisfy Stage 3b thresholds. For chicken and cheese at Stage 3b returns 0 valid combinations, demonstrating meal planning support that accounts for cumulative nutrient loads rather than evaluating ingredients in isolation.</p>
 
 <pre><code>PREFIX nutrientkg: &lt;http://nutrientkg.org/entity/&gt;
 PREFIX nkgp:       &lt;http://nutrientkg.org/property/&gt;
