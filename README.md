@@ -18,7 +18,7 @@ NutrientKG bridges this gap by combining:
 - **USDA FoodData Central** — per-100g nutrient values for 289K matched ingredients
 - **KDIGO 2024 guidelines** — per-meal thresholds for sodium, potassium, phosphorus, and protein across 6 CKD stages
 - **SNOMED CT** — clinical concept alignment for the 6 CKD stages
-- **FoodOn ontology** — food class hierarchy for RGCN message passing
+- **FoodOn ontology** — food class hierarchy
 - **NKF recipes** — 9 dietitian-verified CKD-safe recipes from the National Kidney Foundation
 
 ---
@@ -31,7 +31,7 @@ NutrientKG bridges this gap by combining:
 | Unique predicates | 32 |
 | Recipes | 1,029,568 |
 | Unique ingredients | 675,940 |
-| Matched to FDC | 289,760 (42.9%) |
+| Matched to FDC | 26,019,189 (42.9%) |
 | Substitution observations | 70,520 |
 | Unique substitution pairs | 30,782 |
 | Safe substitution edges | 116,786 |
