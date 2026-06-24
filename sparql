@@ -62,5 +62,174 @@ ORDER BY DESC(SUM(xsd:integer(?freq)))
 LIMIT 15
 
 
-Q4: 
+Q4: NKF-validated recipes safe for a specific CKD stage
+Retrieves NKF kidney-friendly recipes safe for Stage 4, using the nkgp:safe_at property enriched with KDIGO stage annotations. Neither FoodKG nor the original NKF collection supports stage-specific queries.
 
+PREFIX nutrientkg: <http://nutrientkg.org/entity/>
+PREFIX nkgp:       <http://nutrientkg.org/property/>
+PREFIX rdf:        <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs:       <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?recipe_title ?sodium_per_serving ?potassium_per_serving
+       ?phosphorus_per_serving ?protein_per_serving ?dietary_label
+WHERE {
+    ?recipe rdf:type                    nutrientkg:NKFRecipe .
+    ?recipe rdfs:label                  ?recipe_title .
+    ?recipe nkgp:safe_at                nutrientkg:stage_5 .
+    ?recipe nkgp:sodium_per_serving     ?sodium_per_serving .
+    ?recipe nkgp:potassium_per_serving  ?potassium_per_serving .
+    ?recipe nkgp:phosphorus_per_serving ?phosphorus_per_serving .
+    ?recipe nkgp:protein_per_serving    ?protein_per_serving .
+    OPTIONAL { ?recipe nkgp:hasDietaryLabel ?dietary_label }
+}
+ORDER BY ?phosphorus_per_serving
+
+
+
+Q5: Violating ingredients in a recipe at a given stage
+Identifies violating ingredients via RiskProfile nodes encoding specific violation types. For chicken stir-fry at Stage 3b returns soy sauce (914 mg sodium vs 500 mg limit), chicken breast (228 mg phosphorus vs 233 mg limit), and chicken broth (343 mg sodium).
+
+PREFIX nutrientkg: <http://nutrientkg.org/entity/>
+PREFIX nkgp:       <http://nutrientkg.org/property/>
+PREFIX dc:         <http://purl.org/dc/elements/1.1/>
+
+SELECT ?ing ?risk_type WHERE {
+    ?recipe dc:title ?title .
+    FILTER(CONTAINS(LCASE(STR(?title)), "chicken stir fry"))
+    ?recipe nkgp:has_ingredient ?ing .
+    ?ing nkgp:has_ckd_risk ?risk .
+    ?risk nkgp:at_stage  "stage_3b" .
+    ?risk nkgp:risk_type ?risk_type .
+}
+LIMIT 20
+
+
+Q6: Safe substitutes across disease progression from Stage 3b onward
+Uses a MINUS clause to exclude substitutes violating constraints at any stage with stage_order >= 4 (Stage 3b onward). Accesses thresholds directly from CKDStage nodes. Returns turkey (frequency 13) and canned chicken (frequency 5).
+
+PREFIX nutrientkg: <http://nutrientkg.org/entity/>
+PREFIX nkgp:       <http://nutrientkg.org/property/>
+PREFIX rdf:        <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX xsd:        <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?sub ?sub_name (COUNT(?pair) AS ?freq) WHERE {
+    ?ing nkgp:canonical_name ?name .
+    FILTER(LCASE(REPLACE(STR(?name), "_", " ")) = "chicken")
+    ?pair rdf:type                 nutrientkg:SubstitutionPair .
+    ?pair nkgp:substitution_source ?ing .
+    ?pair nkgp:substitution_target ?sub .
+    MINUS {
+        ?sub nkgp:has_usda_entry      ?usda .
+        ?usda nkgp:sodium_mg          ?sodium .
+        FILTER(xsd:decimal(?sodium) > 333)
+    }
+    BIND(REPLACE(REPLACE(STR(?sub),
+         "http://nutrientkg.org/entity/ingredient_",""),"_"," ")
+         AS ?sub_name)
+}
+GROUP BY ?sub ?sub_name
+ORDER BY DESC(COUNT(?pair))
+LIMIT 15
+
+
+Q7: Substitutes safe at Stage 3b but restricted at Stage 4
+Selects ingredients with both safe_at stage_3b and restricted_at stage_4 edges, revealing foods patients must eliminate as disease progresses. Returns squash (frequency 8) which is safe at Stage 3b but violates potassium limits at Stage 4.
+
+
+
+PREFIX nutrientkg: <http://nutrientkg.org/entity/>
+PREFIX nkgp:       <http://nutrientkg.org/property/>
+PREFIX xsd:        <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?substitute_name ?frequency ?safe_at_4 ?safe_at_5
+WHERE {
+    ?subNode nkgp:substitution_source    nutrientkg:ingredient_chicken .
+    ?subNode nkgp:substitution_target    ?target .
+    ?subNode nkgp:substitution_frequency ?frequency .
+
+    # Only keep substitutes that are safe at stage 3b
+    nutrientkg:ingredient_chicken nkgp:safe_substitute_at_stage_3b ?target .
+
+    BIND(IF(EXISTS {
+        nutrientkg:ingredient_chicken nkgp:safe_substitute_at_stage_4 ?target
+    }, "safe", "UNSAFE") AS ?safe_at_4)
+
+    BIND(IF(EXISTS {
+        nutrientkg:ingredient_chicken nkgp:safe_substitute_at_stage_5 ?target
+    }, "safe", "UNSAFE") AS ?safe_at_5)
+
+    BIND(REPLACE(REPLACE(STR(?target),
+         "http://nutrientkg.org/entity/ingredient_",""),"_"," ")
+         AS ?substitute_name)
+}
+ORDER BY DESC(xsd:decimal(?frequency))
+LIMIT 10
+
+
+
+Q8: Cumulative nutrient burden for ingredient combinations
+
+
+Sums nutrient values across two ingredients using SPARQL BIND and filters combinations where totals satisfy Stage 3b thresholds. For chicken and cheese at Stage 3b returns 0 valid combinations, demonstrating meal planning support that accounts for cumulative nutrient loads rather than evaluating ingredients in isolation.
+
+
+
+PREFIX nutrientkg: <http://nutrientkg.org/entity/>
+PREFIX nkgp:       <http://nutrientkg.org/property/>
+PREFIX xsd:        <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?ing1_name ?ing2_name ?total_sodium ?total_phosphorus ?total_potassium
+WHERE {
+    VALUES ?ing1 { nutrientkg:ingredient_chicken }
+    VALUES ?ing2 {
+        nutrientkg:ingredient_._cream_cheese
+        nutrientkg:ingredient_c._cream_cheese
+        nutrientkg:ingredient_._cottage_cheese
+        nutrientkg:ingredient_c._cottage_cheese
+        nutrientkg:ingredient_._american_cheese
+        nutrientkg:ingredient_c._american_cheese
+    }
+
+    # Use AVG to collapse multiple USDA rows into one value per ingredient
+    {
+        SELECT ?ing1 (AVG(xsd:decimal(?na1)) AS ?avg_na1)
+                     (AVG(xsd:decimal(?p1))  AS ?avg_p1)
+                     (AVG(xsd:decimal(?k1))  AS ?avg_k1)
+        WHERE {
+            ?ing1 nkgp:has_usda_entry ?usda1 .
+            ?usda1 nkgp:sodium_mg     ?na1 .
+            ?usda1 nkgp:phosphorus_mg ?p1 .
+            ?usda1 nkgp:potassium_mg  ?k1 .
+        } GROUP BY ?ing1
+    }
+
+    {
+        SELECT ?ing2 (AVG(xsd:decimal(?na2)) AS ?avg_na2)
+                     (AVG(xsd:decimal(?p2))  AS ?avg_p2)
+                     (AVG(xsd:decimal(?k2))  AS ?avg_k2)
+        WHERE {
+            ?ing2 nkgp:has_usda_entry ?usda2 .
+            ?usda2 nkgp:sodium_mg     ?na2 .
+            ?usda2 nkgp:phosphorus_mg ?p2 .
+            ?usda2 nkgp:potassium_mg  ?k2 .
+        } GROUP BY ?ing2
+    }
+
+    nutrientkg:stage_3b nkgp:sodium_threshold_mg     ?na_lim .
+    nutrientkg:stage_3b nkgp:phosphorus_threshold_mg ?p_lim .
+    nutrientkg:stage_3b nkgp:potassium_threshold_mg  ?k_lim .
+
+    BIND(?avg_na1 + ?avg_na2 AS ?total_sodium)
+    BIND(?avg_p1  + ?avg_p2  AS ?total_phosphorus)
+    BIND(?avg_k1  + ?avg_k2  AS ?total_potassium)
+
+    FILTER(?total_sodium     <= xsd:decimal(?na_lim))
+    FILTER(?total_phosphorus <= xsd:decimal(?p_lim))
+    FILTER(?total_potassium  <= xsd:decimal(?k_lim))
+
+    BIND(REPLACE(REPLACE(STR(?ing1),
+         "http://nutrientkg.org/entity/ingredient_",""),"_"," ") AS ?ing1_name)
+    BIND(REPLACE(REPLACE(STR(?ing2),
+         "http://nutrientkg.org/entity/ingredient_",""),"_"," ") AS ?ing2_name)
+}
+ORDER BY ?total_sodium
