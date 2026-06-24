@@ -27,7 +27,7 @@ NutrientKG bridges this gap by combining:
 
 | Metric | Value |
 |--------|-------|
-| Total triples | 28,047,658 |
+| Total triples | 26,019,189 |
 | Unique predicates | 32 |
 | Recipes | 1,029,568 |
 | Unique ingredients | 675,940 |
