@@ -1,0 +1,16 @@
+Q1: Substitutes for an ingredient ranked by observation frequency
+Returns validated substitutes for butter ranked by frequency across 70,520 Recipe1M substitution instances. Results: olive oil (547), margarine (320), coconut oil (156).
+
+PREFIX nutrientkg: <http://nutrientkg.org/entity/>
+PREFIX nkgp:       <http://nutrientkg.org/property/>
+PREFIX rdf:        <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT ?sub ?freq WHERE {
+  ?pair rdf:type                    nutrientkg:SubstitutionPair .
+  ?pair nkgp:substitution_source    nutrientkg:ingredient_butter .
+  ?pair nkgp:substitution_target    ?sub .
+  ?pair nkgp:substitution_frequency ?freq .
+}
+ORDER BY DESC(?freq)
+LIMIT 15
+
