@@ -27,7 +27,7 @@ NutrientKG bridges this gap by combining:
 
 | Metric | Value |
 |--------|-------|
-| Total triples | 26,019,189 |
+| Total triples | 26,597,634 |
 | Unique predicates | 32 |
 | Recipes | 1,029,568 |
 | Unique ingredients | 675,940 |
@@ -37,7 +37,7 @@ NutrientKG bridges this gap by combining:
 | Safe substitution edges | 116,786 |
 | Clinical risk nodes | 1,009,042 |
 | FoodOn classes used | 10,383 |
-| NKF recipes integrated | 9 |
+| NKF recipes integrated | 197 |
 | SNOMED CT alignments | 6 |
 
 ---
