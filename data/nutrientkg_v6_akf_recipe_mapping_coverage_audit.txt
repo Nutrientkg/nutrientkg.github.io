@@ -1,0 +1,206 @@
+
+===================================================================================================================
+A. RECIPE COUNTS
+===================================================================================================================
+Unique recipe records encountered                                                                  1,029,946
+Recipes with title                                                                                 1,029,720
+Recipes with >=1 ingredient                                                                        1,029,544
+Titled recipes with zero ingredients                                                                     402
+
+===================================================================================================================
+B. FULL RECIPE MAPPING COVERAGE
+===================================================================================================================
+Fully resolved recipes: every ingredient resolves to a KG ingredient                       473,389 ( 45.98%)
+Fully USDA-mapped recipes: every ingredient has >=1 USDA mapping                           408,308 ( 39.66%)
+Fully UNIQUE-mapped recipes: every ingredient has exactly 1 USDA mapping                    13,787 (  1.34%)
+Recipes containing >=1 ambiguous/multi-USDA ingredient                                     958,563 ( 93.11%)
+
+===================================================================================================================
+C. FULL CKD-NUTRIENT RECIPE COVERAGE
+===================================================================================================================
+Potentially complete recipes: every ingredient has >=1 USDA candidate with Na/K/P/protein          80,433 (  7.81%)
+STRICT complete recipes: every ingredient has exactly 1 USDA and all Na/K/P/protein           2,271 (  0.22%)
+
+===================================================================================================================
+D. RECIPE USDA-MAPPING DISTRIBUTION
+===================================================================================================================
+100% ingredients USDA-mapped                                                               408,308 ( 39.66%)
+90-99% ingredients USDA-mapped                                                             127,514 ( 12.39%)
+75-89% ingredients USDA-mapped                                                             289,998 ( 28.17%)
+50-74% ingredients USDA-mapped                                                             138,441 ( 13.45%)
+1-49% ingredients USDA-mapped                                                               58,429 (  5.68%)
+0% ingredients USDA-mapped                                                                   6,854 (  0.67%)
+
+===================================================================================================================
+E. INGREDIENT-AMOUNT COVERAGE
+===================================================================================================================
+Total ingredient occurrences                                                                       9,252,681
+Total has_amount_grams occurrences                                                                 8,676,097
+Recipes with ingredient count == amount count                                              539,515 ( 52.40%)
+
+===================================================================================================================
+F. OCCURRENCE-WEIGHTED INGREDIENT COVERAGE
+===================================================================================================================
+Ingredient occurrences resolving to KG ingredient                                        8,080,697 ( 87.33%)
+Ingredient occurrences with >=1 USDA mapping                                             7,931,630 ( 85.72%)
+Ingredient occurrences with exactly 1 USDA mapping                                       3,697,696 ( 39.96%)
+Ingredient occurrences with multiple USDA mappings                                       4,233,934 ( 45.76%)
+Ingredient occurrences having >=1 complete Na/K/P/protein USDA candidate                 5,958,692 ( 64.40%)
+Ingredient occurrences with exactly 1 USDA + complete Na/K/P/protein                     1,852,427 ( 20.02%)
+
+===================================================================================================================
+G. UNIQUE INGREDIENT COVERAGE
+===================================================================================================================
+Unique ingredients used in recipes                                                                   589,831
+Unique used ingredients resolving to KG ingredient                                         245,993 ( 41.71%)
+Unique used ingredients with >=1 USDA mapping                                              240,292 ( 40.74%)
+Unique used ingredients with exactly 1 USDA mapping                                        235,227 ( 39.88%)
+Unique used ingredients with multiple USDA mappings                                          5,065 (  0.86%)
+Unique used ingredients with >=1 complete nutrient candidate                                76,563 ( 12.98%)
+Unique used ingredients with exactly 1 complete USDA record                                 72,868 ( 12.35%)
+
+===================================================================================================================
+H. TOP 40 FREQUENTLY USED INGREDIENTS WITHOUT USDA MAPPING
+===================================================================================================================
+[ 1]     41,199 occurrences    ingredient_arge_eggs
+[ 2]     35,714 occurrences    ingredient_cumin
+[ 3]     15,280 occurrences    ingredient_salt_and_freshly_black_pepper
+[ 4]      9,384 occurrences    ingredient_._butter
+[ 5]      9,112 occurrences    ingredient_._salt
+[ 6]      8,548 occurrences    ingredient_c._sugar
+[ 7]      6,062 occurrences    ingredient_c._water
+[ 8]      5,717 occurrences    ingredient_kosher_salt_and_freshly_black_pepper
+[ 9]      5,480 occurrences    ingredient_c._flour
+[10]      5,102 occurrences    ingredient_._sugar
+[11]      4,007 occurrences    ingredient_._lemon_juice
+[12]      3,968 occurrences    ingredient_._vanilla
+[13]      3,945 occurrences    ingredient_ice_cubes
+[14]      3,774 occurrences    ingredient_freshly_nutmeg
+[15]      3,580 occurrences    ingredient_._oil
+[16]      3,358 occurrences    ingredient_dry_sherry
+[17]      3,177 occurrences    ingredient_._flour
+[18]      3,098 occurrences    ingredient_._cinnamon
+[19]      2,829 occurrences    ingredient_c._onion
+[20]      2,787 occurrences    ingredient_._parsley
+[21]      2,757 occurrences    ingredient_butter_or_12_margarine
+[22]      2,699 occurrences    ingredient_._olive_oil
+[23]      2,623 occurrences    ingredient_._extra_virgin_olive_oil
+[24]      2,477 occurrences    ingredient_butter_or_2_margarine
+[25]      2,270 occurrences    ingredient_butter_or_1_margarine
+[26]      2,230 occurrences    ingredient_kosher_salt_and_freshly_pepper
+[27]      2,190 occurrences    ingredient_._black_pepper
+[28]      2,177 occurrences    ingredient_c._celery
+[29]      2,086 occurrences    ingredient_._onion
+[30]      2,082 occurrences    ingredient_._water
+[31]      2,069 occurrences    ingredient_butter_or_14_margarine
+[32]      2,066 occurrences    ingredient_c._all-purpose_flour
+[33]      1,998 occurrences    ingredient_._baking_soda
+[34]      1,996 occurrences    ingredient_self-rising_flour
+[35]      1,938 occurrences    ingredient_lime_zest
+[36]      1,912 occurrences    ingredient_._vegetable_oil
+[37]      1,874 occurrences    ingredient_finely_lemon_zest
+[38]      1,831 occurrences    ingredient_._cornstarch
+[39]      1,769 occurrences    ingredient_-3_garlic
+[40]      1,761 occurrences    ingredient_._brown_sugar
+
+===================================================================================================================
+I. TOP 40 FREQUENT AMBIGUOUS MULTI-USDA INGREDIENTS
+===================================================================================================================
+[ 1]    318,509 occurrences     3 USDA mappings    ingredient_salt
+[ 2]    215,927 occurrences     4 USDA mappings    ingredient_butter
+[ 3]    168,722 occurrences     3 USDA mappings    ingredient_sugar
+[ 4]    119,989 occurrences     4 USDA mappings    ingredient_water
+[ 5]    119,625 occurrences     3 USDA mappings    ingredient_onion
+[ 6]    115,243 occurrences     3 USDA mappings    ingredient_garlic
+[ 7]     99,897 occurrences     2 USDA mappings    ingredient_eggs
+[ 8]     99,728 occurrences     3 USDA mappings    ingredient_milk
+[ 9]     80,562 occurrences     3 USDA mappings    ingredient_flour
+[10]     77,198 occurrences     2 USDA mappings    ingredient_black_pepper
+[11]     72,401 occurrences     3 USDA mappings    ingredient_pepper
+[12]     70,076 occurrences     4 USDA mappings    ingredient_cinnamon
+[13]     69,925 occurrences     2 USDA mappings    ingredient_lemon_juice
+[14]     64,528 occurrences     2 USDA mappings    ingredient_baking_powder
+[15]     62,300 occurrences     2 USDA mappings    ingredient_brown_sugar
+[16]     61,676 occurrences     3 USDA mappings    ingredient_salt_and_pepper
+[17]     55,736 occurrences     2 USDA mappings    ingredient_vegetable_oil
+[18]     55,691 occurrences     2 USDA mappings    ingredient_baking_soda
+[19]     52,915 occurrences     3 USDA mappings    ingredient_egg
+[20]     50,628 occurrences     2 USDA mappings    ingredient_parsley
+[21]     47,693 occurrences     3 USDA mappings    ingredient_tomatoes
+[22]     42,658 occurrences     3 USDA mappings    ingredient_vanilla
+[23]     38,524 occurrences     2 USDA mappings    ingredient_ginger
+[24]     37,944 occurrences     4 USDA mappings    ingredient_sour_cream
+[25]     36,927 occurrences     2 USDA mappings    ingredient_parmesan_cheese
+[26]     35,714 occurrences     3 USDA mappings    ingredient_celery
+[27]     33,631 occurrences     3 USDA mappings    ingredient_soy_sauce
+[28]     33,498 occurrences     2 USDA mappings    ingredient_garlic_powder
+[29]     31,904 occurrences     2 USDA mappings    ingredient_cilantro
+[30]     31,070 occurrences     3 USDA mappings    ingredient_onions
+[31]     30,820 occurrences     2 USDA mappings    ingredient_nutmeg
+[32]     30,637 occurrences     4 USDA mappings    ingredient_mayonnaise
+[33]     29,543 occurrences     2 USDA mappings    ingredient_basil
+[34]     29,049 occurrences     2 USDA mappings    ingredient_paprika
+[35]     28,775 occurrences     2 USDA mappings    ingredient_heavy_cream
+[36]     26,795 occurrences     2 USDA mappings    ingredient_cornstarch
+[37]     26,656 occurrences     2 USDA mappings    ingredient_carrots
+[38]     26,189 occurrences     2 USDA mappings    ingredient_cheddar_cheese
+[39]     25,165 occurrences     2 USDA mappings    ingredient_worcestershire_sauce
+[40]     25,054 occurrences     2 USDA mappings    ingredient_extra_virgin_olive_oil
+
+===================================================================================================================
+J. TOP 40 MAPPED INGREDIENTS WITHOUT STRICT FOUR-NUTRIENT COMPLETENESS
+===================================================================================================================
+[ 1]    318,509 occurrences    ingredient_salt
+[ 2]    215,927 occurrences    ingredient_butter
+[ 3]    168,722 occurrences    ingredient_sugar
+[ 4]    119,989 occurrences    ingredient_water
+[ 5]    119,625 occurrences    ingredient_onion
+[ 6]    115,243 occurrences    ingredient_garlic
+[ 7]     99,897 occurrences    ingredient_eggs
+[ 8]     99,728 occurrences    ingredient_milk
+[ 9]     85,599 occurrences    ingredient_arlic
+[10]     80,562 occurrences    ingredient_flour
+[11]     77,198 occurrences    ingredient_black_pepper
+[12]     72,401 occurrences    ingredient_pepper
+[13]     70,076 occurrences    ingredient_cinnamon
+[14]     69,925 occurrences    ingredient_lemon_juice
+[15]     64,528 occurrences    ingredient_baking_powder
+[16]     62,300 occurrences    ingredient_brown_sugar
+[17]     61,676 occurrences    ingredient_salt_and_pepper
+[18]     55,736 occurrences    ingredient_vegetable_oil
+[19]     55,691 occurrences    ingredient_baking_soda
+[20]     52,915 occurrences    ingredient_egg
+[21]     50,628 occurrences    ingredient_parsley
+[22]     47,693 occurrences    ingredient_tomatoes
+[23]     42,658 occurrences    ingredient_vanilla
+[24]     38,599 occurrences    ingredient_kosher_salt
+[25]     38,524 occurrences    ingredient_ginger
+[26]     37,944 occurrences    ingredient_sour_cream
+[27]     36,927 occurrences    ingredient_parmesan_cheese
+[28]     35,714 occurrences    ingredient_celery
+[29]     35,091 occurrences    ingredient_thyme
+[30]     33,631 occurrences    ingredient_soy_sauce
+[31]     33,551 occurrences    ingredient_oregano
+[32]     33,498 occurrences    ingredient_garlic_powder
+[33]     31,904 occurrences    ingredient_cilantro
+[34]     31,070 occurrences    ingredient_onions
+[35]     30,820 occurrences    ingredient_nutmeg
+[36]     30,637 occurrences    ingredient_mayonnaise
+[37]     29,543 occurrences    ingredient_basil
+[38]     29,049 occurrences    ingredient_paprika
+[39]     28,775 occurrences    ingredient_heavy_cream
+[40]     26,795 occurrences    ingredient_cornstarch
+
+===================================================================================================================
+K. IMPORTANT INTERPRETATION
+===================================================================================================================
+FULLY USDA-MAPPED means every ingredient in the recipe has at least one USDA mapping.
+It does NOT mean that every USDA mapping is semantically correct.
+
+FULLY UNIQUE-MAPPED is stricter: every ingredient has exactly one USDA mapping.
+
+STRICT CKD-NUTRIENT COMPLETE is stricter again: every ingredient has exactly one USDA mapping,
+and that USDA record contains sodium, potassium, phosphorus, and protein.
+
+These coverage statistics should therefore be reported separately from manually validated
+semantic mapping accuracy.
